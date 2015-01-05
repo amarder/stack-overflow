@@ -51,6 +51,8 @@ regression discontinuity designs in empirical research.
 
 Describe the data.
 
+Let's look at the supporter badge to see how it affects questions, answers, and votes.
+
 # Results
 
 # Conclusion
