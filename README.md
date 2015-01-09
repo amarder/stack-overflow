@@ -4,4 +4,4 @@ I aim to submit this report to the [MSR 2015 Mining Challenge](http://2015.msrco
 
 If you want to play around with this project, here is how I compile the report using the included test data:
 
-    make DATA_FOLDER=beer.stackexchange.com stack-overflow.pdf
+    make DATA_FOLDER=test-data stack-overflow.pdf
