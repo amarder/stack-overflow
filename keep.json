@@ -1,0 +1,44 @@
+{
+    "Badges": {
+        "Id": "integer",
+        "UserId": "integer",
+        "Name": "string",
+        "Date": "datetime"
+    },
+    "Users": {
+        "Id": "integer",
+        "Reputation": "integer",
+        "CreationDate": "datetime",
+        "DisplayName": "string",
+        "LastAccessDate": "datetime",
+        "Views": "integer",
+        "UpVotes": "integer",
+        "DownVotes": "integer",
+        "AccountId": "integer"
+    },
+    "Posts": {
+        "Id": "integer",
+        "PostTypeId": "integer",
+        "AcceptedAnswerId": "integer",
+        "CreationDate": "datetime",
+        "Score": "integer",
+        "ViewCount": "integer",
+        "OwnerUserId": "integer",
+        "Tags": "string",
+        "AnswerCount": "integer",
+        "CommentCount": "integer"
+    },
+    "Votes": {
+        "Id": "integer",
+        "PostId": "integer",
+        "VoteTypeId": "integer",
+        "CreationDate": "datetime"
+    },
+    "Comments": {
+        "Id": "integer",
+        "PostId": "integer",
+        "Score": "integer",
+        "CreationDate": "datetime",
+        "UserId": "integer"
+    }
+}

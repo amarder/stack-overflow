@@ -5,6 +5,8 @@ from lxml import etree
 import pandas as pd
 import dateutil.parser
 import sqlalchemy
+import sys
+import json
 
 
 def fast_iter(context, func):
@@ -15,77 +17,51 @@ def fast_iter(context, func):
             del elem.getparent()[0]
     del context
 
-keep = {
-    "Badges": {
-        "Id": "integer",
-        "UserId": "integer",
-        "Name": "string",
-        "Date": "datetime"
-    },
-    "Users": {
-        "Id": "integer",
-        "Reputation": "integer",
-        "CreationDate": "datetime",
-        "DisplayName": "string",
-        "LastAccessDate": "datetime",
-        "Views": "integer",
-        "UpVotes": "integer",
-        "DownVotes": "integer",
-        "AccountId": "integer"
-    },
-    "Posts": {
-        "Id": "integer",
-        "PostTypeId": "integer",
-        "AcceptedAnswerId": "integer",
-        "CreationDate": "datetime",
-        "Score": "integer",
-        "ViewCount": "integer",
-        "OwnerUserId": "integer",
-        "Tags": "string",
-        "AnswerCount": "integer",
-        "CommentCount": "integer"
-    },
-    "Votes": {
-        "Id": "integer",
-        "PostId": "integer",
-        "VoteTypeId": "integer",
-        "CreationDate": "datetime"
+
+def create_processor(table):
+    with open('keep.json') as f:
+        keep = json.load(f)
+    d = keep[table]
+
+    element_processors = {
+        "integer": lambda x: int(x) if x is not None else None,
+        "string": unicode,
+        "datetime": dateutil.parser.parse,
     }
-}
-# Comments
 
-element_processors = {
-    "integer": lambda x: int(x) if x is not None else None,
-    "string": unicode,
-    "datetime": dateutil.parser.parse,
-}
-
-
-def create_processor(d):
     def process_element(elt):
         items = [
             (k, element_processors[v](elt.attrib.get(k)))
             for k, v in d.items()
         ]
         return dict(items)
+
     return process_element
 
 
-def extract(table):
-    path = 'beer.stackexchange.com/%s.xml' % table
-    rows = []
-    process_element = create_processor(keep[table])
+def blocks(folder, table, size=10000):
+    path = '%s/%s.xml' % (folder, table)
+    process_element = create_processor(table)
 
     with open(path) as f:
         context = etree.iterparse(f, events=('end',), tag='row')
 
-        for d in fast_iter(context, process_element):
+        for i, d in enumerate(fast_iter(context, process_element)):
+            if i % size == 0:
+                if i > 0:
+                    yield pd.DataFrame(data=rows)
+                rows = []
             rows.append(d)
 
-    return pd.DataFrame(data=rows)
+    if rows:
+        yield pd.DataFrame(data=rows)
 
-engine = sqlalchemy.create_engine('sqlite:///my_db.sqlite')
-tables = keep.keys()
-for k in tables:
-    df = extract(k)
-    df.to_sql(k, engine, if_exists='replace')
+
+if __name__ == '__main__':
+    script, infolder, outdb = sys.argv
+
+    engine = sqlalchemy.create_engine('sqlite:///%s' % outdb)
+    tables = ['Users']
+    for k in tables:
+        for df in blocks(infolder, k):
+            df.to_sql(k, engine, if_exists='append')
