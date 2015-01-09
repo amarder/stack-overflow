@@ -1,0 +1,17 @@
+```{r}
+library(dplyr)
+library(ggplot2)
+
+df <- read.csv('comments.csv')
+
+df$days2 <- ifelse(df$days < 0, floor(df$days), ceiling(df$days))
+grid <- expand.grid(UserId=unique(df$UserId), days2=-7:7)
+merged <- merge(grid, df, by=c('UserId', 'days2'), all.x=TRUE, all.y=FALSE)
+merged$comment <- !is.na(merged$AwardDate)
+daily.count <- merged %.% group_by(UserId, days2) %.% summarise(n=sum(comment))
+
+daily.count$n <- daily.count$n - (daily.count$days2 == -1)
+daily.count$n[daily.count$days2 == 0] <- NA
+daily.count$after <- daily.count$days2 > 0
+ggplot(daily.count, aes(x=days2, y=n, group=days2)) + geom_boxplot()
+```
