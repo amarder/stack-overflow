@@ -19,7 +19,7 @@ def fast_iter(context, func):
 
 
 def create_processor(table):
-    with open('keep.json') as f:
+    with open('munge/keep.json') as f:
         keep = json.load(f)
     d = keep[table]
 
