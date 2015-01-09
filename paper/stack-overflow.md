@@ -4,6 +4,12 @@ author: Andrew Marder
 date: \today
 ---
 
+# Next Steps
+
+1. Event study approach: [@miller_principal_2013, @jacobson_earnings_1993, @ashenfelter_estimating_1978]
+
+2. Sorting around discontinuity: [@lee_crime_2005, @mccrary_manipulation_2008, @urquiola_class-size_2009]
+
 # Introduction
 
 @deterding_game_2011 define "_gamification_ as the use of game design

@@ -4,8 +4,11 @@ my_db.sqlite: munge/xml2sql.py munge/keep.json $(DATA_FOLDER)/*.xml
 
 figures: my_db.sqlite
 
-paper/stack-overflow.pdf: figures paper/stack-overflow.md paper/stack-overflow.bib
-	pandoc paper/stack-overflow.md --biblio paper/stack-overflow.bib --filter pandoc-citeproc -o paper/stack-overflow.pdf
+paper/clean.bib: paper/raw.bib
+	cd paper ; python clean-references.py raw.bib clean.bib
+
+paper/stack-overflow.pdf: figures paper/stack-overflow.md paper/clean.bib
+	pandoc paper/stack-overflow.md --biblio paper/clean.bib --filter pandoc-citeproc -o paper/stack-overflow.pdf
 
 wc: paper/stack-overflow.pdf
 	pdftotext paper/stack-overflow.pdf - | wc -w
