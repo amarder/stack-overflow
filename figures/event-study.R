@@ -4,16 +4,26 @@ library(ggplot2)
 library(plm)
 library(reshape2)
 
+set.seed(1)
+
 WINDOW <- 240
-resolution <- 15
+resolution <- 5
 
 db <- src_sqlite('my_db.sqlite', create=FALSE)
 badges <- tbl(db, 'Badges')
 comments <- tbl(db, 'Comments')
 
-a <- badges %>% filter(Name == 'Commentator') %>% select(UserId, Date)
-b <- comments %>% select(CreationDate, UserId)
-df <- data.frame(inner_join(a, b, by='UserId'))
+y <- badges %>%
+    filter(Name == 'Commentator') %>%
+    select(UserId, Date) %>%
+    collect() %>%
+    sample_n(5000)
+
+x <- comments %>%
+    select(CreationDate, UserId)
+
+df <- inner_join(x, y, by='UserId', copy=TRUE) %>% collect()
+
 seconds <- ymd_hms(df$CreationDate) - ymd_hms(df$Date)
 df$minute <- as.numeric(seconds) / 60
 
@@ -53,4 +63,4 @@ g <- (
     ylab(paste('Number of comments posted per', resolution, 'minutes')) +
     ggtitle('Coefficient estimates with 95% confidence interval')
     )
-print(g)
+ggsave('figures/event-study.pdf', g, height=4)

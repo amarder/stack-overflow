@@ -62,6 +62,8 @@ and answers._
 
 # Results
 
+![](figures/event-study.pdf)\
+
 For a number of badges users have complete control over the assignment variable. For privileges based on points, users do not have perfect control. Can I get a historical record of reputation points?
 
 It looks like I'll have to use the API to get some record of reputation. Maybe I'll have to use this for a subsample of users with specific privileges. That could make things a bit faster.

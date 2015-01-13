@@ -61,7 +61,7 @@ if __name__ == '__main__':
     script, infolder, outdb = sys.argv
 
     engine = sqlalchemy.create_engine('sqlite:///%s' % outdb)
-    tables = ['Users']
+    tables = ['Users', 'Badges', 'Comments']
     for k in tables:
         for df in blocks(infolder, k):
             df.to_sql(k, engine, if_exists='append')
