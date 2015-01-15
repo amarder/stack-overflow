@@ -16,6 +16,7 @@ keep = [
     'volume',
     'year',
     'pages',
+    'booktitle',
 ]
 
 special_characters = {
