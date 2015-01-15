@@ -7,6 +7,7 @@ import dateutil.parser
 import sqlalchemy
 import sys
 import json
+import sqlite3
 
 
 def fast_iter(context, func):
@@ -57,11 +58,24 @@ def blocks(folder, table, size=10000):
         yield pd.DataFrame(data=rows)
 
 
-if __name__ == '__main__':
-    script, infolder, outdb = sys.argv
+def tables_in(path):
+    con = sqlite3.connect(path)
+    cursor = con.cursor()
+    cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
+    l = cursor.fetchall()
+    return [x[0] for x in l]
 
+
+def xml2sql(infolder, outdb):
+    existing_tables = tables_in(outdb)
     engine = sqlalchemy.create_engine('sqlite:///%s' % outdb)
-    tables = ['Users', 'Badges', 'Comments']
+    tables = ['Users', 'Badges', 'Comments', 'PostHistory']
     for k in tables:
-        for df in blocks(infolder, k):
-            df.to_sql(k, engine, if_exists='append')
+        if k not in existing_tables:
+            print 'Creating table of %s.' % k
+            for df in blocks(infolder, k):
+                df.to_sql(k, engine, if_exists='append')
+
+
+if __name__ == '__main__':
+    xml2sql(infolder=sys.argv[1], outdb=sys.argv[2])

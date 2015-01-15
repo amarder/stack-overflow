@@ -40,5 +40,13 @@
         "Score": "integer",
         "CreationDate": "datetime",
         "UserId": "integer"
+    },
+    "PostHistory": {
+        "Id": "integer",
+        "PostHistoryTypeId": "integer",
+        "PostId": "integer",
+        "CreationDate": "datetime",
+        "UserId": "integer",
+        "RevisionGUID": "string"
     }
 }
