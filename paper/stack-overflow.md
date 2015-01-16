@@ -55,7 +55,13 @@ regression discontinuity designs in empirical research.
 
 # Data
 
-Describe the data.
+There are almost 3.5 million registered users on Stack Overflow. Less than one percent of those users have been awarded the Strunk & White, Copy Editor, or Archaeologist badges.
+
+| Badge          | Number awarded | Reason awarded                                                  |
+|:---------------|:--------------:|:----------------------------------------------------------------|
+| Strunk & White |  7,073         | Edited 80 posts                                                 |
+| Copy Editor    |  1,288         | Edited 500 posts (excluding own or deleted posts and tag edits) |
+| Archaeologist  |   691          | Edited 100 posts that were inactive for 6 months                |
 
 _Let's look at the Commentator badge to see how it affects comments, questions,
 and answers._
