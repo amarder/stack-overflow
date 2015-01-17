@@ -1,10 +1,12 @@
 ---
-title: How effective is gamification in promoting user engagement?
+title: Stack Overflow - Modeling user engagement
 author: Andrew Marder
 date: \today
 ---
 
 # Next Steps
+
+How many views does a user earn for reputation points, days on the platform, badges?
 
 1. Event study approach: [@miller_principal_2013, @jacobson_earnings_1993, @ashenfelter_estimating_1978]
 
@@ -57,18 +59,17 @@ regression discontinuity designs in empirical research.
 
 There are almost 3.5 million registered users on Stack Overflow. Less than one percent of those users have been awarded the Strunk & White, Copy Editor, or Archaeologist badges.
 
-| Badge          | Number awarded | Reason awarded                                                  |
-|:---------------|:--------------:|:----------------------------------------------------------------|
-| Strunk & White |  7,073         | Edited 80 posts                                                 |
-| Copy Editor    |  1,288         | Edited 500 posts (excluding own or deleted posts and tag edits) |
-| Archaeologist  |   691          | Edited 100 posts that were inactive for 6 months                |
 
 _Let's look at the Commentator badge to see how it affects comments, questions,
 and answers._
 
+![Kernel density estimates](figures/density-estimates.pdf)
+
 # Results
 
-![](figures/event-study.pdf)\
+![Views versus reputation](figures/views-vs-reputation.pdf)
+
+Add a coefficient plot of badges. Where does it makes sense to put effort?
 
 For a number of badges users have complete control over the assignment variable. For privileges based on points, users do not have perfect control. Can I get a historical record of reputation points?
 

@@ -9,9 +9,8 @@ figures/event-study.pdf: figures/event-study.R my_db.sqlite
 paper/clean.bib: paper/clean-references.py paper/raw.bib
 	python paper/clean-references.py paper/raw.bib paper/clean.bib
 
-paper/stack-overflow.pdf: figures paper/stack-overflow.md paper/clean.bib figures/event-study.pdf
-	# -V classoption:twocolumn
-	pandoc paper/stack-overflow.md -V geometry:margin=1in --biblio paper/clean.bib --filter pandoc-citeproc -o paper/stack-overflow.pdf
+paper/stack-overflow.pdf: paper/stack-overflow.md paper/clean.bib
+	pandoc paper/stack-overflow.md -V geometry:margin=1in -V classoption:twocolumn --biblio paper/clean.bib --filter pandoc-citeproc -o paper/stack-overflow.pdf
 
 wc: paper/stack-overflow.pdf
 	pdftotext paper/stack-overflow.pdf - | wc -w
