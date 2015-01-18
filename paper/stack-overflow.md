@@ -69,6 +69,8 @@ and answers._
 
 ![Views versus reputation](figures/views-vs-reputation.pdf)
 
+![](figures/coefplot.pdf)\
+
 Add a coefficient plot of badges. Where does it makes sense to put effort?
 
 For a number of badges users have complete control over the assignment variable. For privileges based on points, users do not have perfect control. Can I get a historical record of reputation points?

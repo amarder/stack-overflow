@@ -72,15 +72,14 @@ bin <- function(x, bins=100) {
 users$bin_views <- bin(users$log_views_resid)
 users$bin_rep <- bin(users$log_reputation_resid)
 counts <- users %>% group_by(bin_views, bin_rep) %>% summarise(count=n())
-counts$count <- counts$count / max(counts$count)
 g <- (
     ggplot() +
     geom_tile(data=counts, aes(x=bin_rep, y=bin_views, fill=count)) +
     theme_classic() +
     scale_fill_gradient(low = "#ffffff", high = "#222222") +
-    guides(fill=FALSE) +
     stat_smooth(data=users, aes(x=log_reputation_resid, y=log_views_resid), method='lm', se=FALSE) +
     xlab('log(Reputation)') +
-    ylab('log(Views)')
+    ylab('log(Views)') +
+    guides(fill=guide_legend(title='Users'))
     )
 ggsave('figures/views-vs-reputation.pdf', g)
