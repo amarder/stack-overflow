@@ -46,13 +46,13 @@ multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
 }
 
 ## views
-g1 <- ggplot(users, aes(x=log_views, y=..density..)) + geom_density(fill='black', alpha=0.25) + theme_classic() + ylab('') + xlab('log(Views)')
+g1 <- ggplot(users, aes(x=log_views, y=..density..)) + geom_density(fill='black', alpha=0.125) + theme_classic() + ylab('') + xlab('log(Views)')
 
 ## reputation
-g2 <- ggplot(users, aes(x=log_reputation, y=..density..)) + geom_density(fill='black', alpha=0.25) + theme_classic() + ylab('') + xlab('log(Reputation)')
+g2 <- ggplot(users, aes(x=log_reputation, y=..density..)) + geom_density(fill='black', alpha=0.125) + theme_classic() + ylab('') + xlab('log(Reputation)')
 
 ## years
-g3 <- ggplot(users, aes(x=years, y=..density..)) + geom_density(fill='black', alpha=0.25) + theme_classic() + ylab('') + xlab('Years on Stack Overflow')
+g3 <- ggplot(users, aes(x=years, y=..density..)) + geom_density(fill='black', alpha=0.125) + theme_classic() + ylab('') + xlab('Years on Stack Overflow')
 pdf('figures/density-estimates.pdf')
 multiplot(g1, g2, g3)
 dev.off()
@@ -62,6 +62,25 @@ fit <- lm(log_views ~ years, data=users)
 users$log_views_resid <- resid(fit)
 fit <- lm(log_reputation ~ years, data=users)
 users$log_reputation_resid <- resid(fit)
-g <- ggplot(users %>% sample_n(10000), aes(x=log_reputation_resid, y=log_views_resid)) + geom_point(alpha=0.05) + theme_classic() + xlab('log(Reputation)') + ylab('log(Views)') + stat_smooth(method='lm', se=FALSE, color='red')
 
+bin <- function(x, bins=100) {
+    a <- min(x)
+    b <- max(x)
+    result <- a + round(bins * (x - a) / (b - a)) / bins * (b - a)
+    return(result)
+}
+users$bin_views <- bin(users$log_views_resid)
+users$bin_rep <- bin(users$log_reputation_resid)
+counts <- users %>% group_by(bin_views, bin_rep) %>% summarise(count=n())
+counts$count <- counts$count / max(counts$count)
+g <- (
+    ggplot() +
+    geom_tile(data=counts, aes(x=bin_rep, y=bin_views, fill=count)) +
+    theme_classic() +
+    scale_fill_gradient(low = "#ffffff", high = "#222222") +
+    guides(fill=FALSE) +
+    stat_smooth(data=users, aes(x=log_reputation_resid, y=log_views_resid), method='lm', se=FALSE) +
+    xlab('log(Reputation)') +
+    ylab('log(Views)')
+    )
 ggsave('figures/views-vs-reputation.pdf', g)
