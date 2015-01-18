@@ -1,3 +1,4 @@
 /my_db.sqlite
-paper/clean.bib
+/paper/clean.bib
 /figures/*.pdf
+/munge/badges.csv
