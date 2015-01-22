@@ -8,24 +8,37 @@ badges <- tbl(db, 'Badges') %>%
     filter(Name == "Socratic" | Name == "Generalist" | Name == "Copy Editor") %>%
     collect()
 
-copy_to(db, badges, 'badges_of_interest', temporary=FALSE)
-
 ## 2. get list of posts
 users <- as.tbl(data.frame(UserId=unique(badges$UserId)))
 
 posts <- tbl(db, 'Posts') %>%
     select(CreationDate, OwnerUserId, PostTypeId)
 
-posts_of_interest <- inner_join(posts, users, by=c('OwnerUserId'='UserId'), copy=TRUE) %>%
-    collect()
-
-copy_to(db, posts_of_interest, 'posts_of_interest', temporary=FALSE)
+posts_of_interest <- inner_join(posts, users, by=c('OwnerUserId'='UserId'), copy=TRUE)
 
 ## 3. get list of edits
 edits <- tbl(db, 'PostHistory') %>%
     select(CreationDate, PostHistoryTypeId, RevisionGUID, UserId) %>%
     filter(PostHistoryTypeId == 4 | PostHistoryTypeId == 5 | PostHistoryTypeId == 6)
 
-edits_of_interest <- inner_join(edits, users, by='UserId', copy=TRUE) %>% collect()
+edits_of_interest <- inner_join(edits, users, by='UserId', copy=TRUE)
 
-copy_to(db, edits_of_interest, 'edits_of_interest', temporary=FALSE)
+## 4. set up table of actions
+posts <- posts_of_interest %>%
+    filter(PostTypeId == 1 | PostTypeId == 2) %>%
+    select(UserId, CreationDate, PostTypeId) %>%
+    collect()
+
+edits <- edits_of_interest %>%
+    collect() %>%
+    group_by(RevisionGUID) %>%
+    summarise(
+        UserId=first(UserId),
+        CreationDate=first(CreationDate)
+        ) %>%
+    mutate(PostTypeId=3) %>%
+    select(-RevisionGUID)
+
+actions <- bind_rows(posts, edits)
+copy_to(db, actions, 'actions', temporary=FALSE)
+copy_to(db, badges, 'badges_of_interest', temporary=FALSE)
