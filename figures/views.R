@@ -10,6 +10,14 @@ users$log_views <- log(users$Views + runif(nrow(users)))
 users$log_reputation <- log(users$Reputation + runif(nrow(users), min=0, max=15))
 users$years <- as.integer(as.Date("2014-09-14") - as.Date(users$CreationDate)) / 365
 
+counts <- tbl(db, 'Badges') %>% group_by(UserId) %>% summarise(nbadges=n()) %>% collect()
+users <- left_join(users, counts, by=c('Id'='UserId'))
+users$nbadges[is.na(users$nbadges)] <- 1
+users$log_badges <- log(users$nbadges + runif(nrow(users)))
+
+ggplot(users %>% sample_n(10000), aes(x=log_reputation, y=log_badges)) + geom_point(alpha=0.1) + stat_smooth(method='lm') + ylim(log(4), 8)
+
+
 # http://www.cookbook-r.com/Graphs/Multiple_graphs_on_one_page_(ggplot2)/
 multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
   # Make a list from the ... arguments and plotlist
