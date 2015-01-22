@@ -69,7 +69,7 @@ def tables_in(path):
 def xml2sql(infolder, outdb):
     existing_tables = tables_in(outdb)
     engine = sqlalchemy.create_engine('sqlite:///%s' % outdb)
-    tables = ['Users', 'Badges', 'Comments', 'PostHistory']
+    tables = ['Users', 'Badges', 'Comments', 'PostHistory', 'Posts']
     for k in tables:
         if k not in existing_tables:
             print 'Creating table of %s.' % k
