@@ -6,11 +6,26 @@ date: \today
 
 # Next Steps
 
-How many views does a user earn for reputation points, days on the platform, badges?
-
 1. Event study approach: [@miller_principal_2013, @jacobson_earnings_1993, @ashenfelter_estimating_1978]
 
+Answer: Refiner
+Moderation: Copy Editor
+
+Question: Curious : new badge, need a different resolution for this analysis
+
+x
+
+Question
+Answer
+Edits
+
+To do this event study. I need to fill in the posts table.
+
+
+
 2. Sorting around discontinuity: [@lee_crime_2005, @mccrary_manipulation_2008, @urquiola_class-size_2009]
+
+3. How many views does a user earn for reputation points, days on the platform, badges?
 
 # Introduction
 
@@ -63,9 +78,17 @@ There are almost 3.5 million registered users on Stack Overflow. Less than one p
 _Let's look at the Commentator badge to see how it affects comments, questions,
 and answers._
 
-![Kernel density estimates](figures/density-estimates.pdf)
-
 # Results
+
+![Copy editor](figures/Copy Editor.pdf)
+
+![Generalist](figures/Generalist.pdf)
+
+\clearpage
+
+# Profile views
+
+![Kernel density estimates](figures/density-estimates.pdf)
 
 ![Views versus reputation](figures/views-vs-reputation.pdf)
 
