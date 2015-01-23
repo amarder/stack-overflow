@@ -22,7 +22,7 @@ get_data <- function(badge, window, resolution) {
     seconds <- ymd_hms(df$CreationDate) - ymd_hms(df$Date)
     df$minute <- as.numeric(seconds) / 60
 
-    df$minute <- floor(df$minute / resolution) * resolution
+    df$minute <- ceiling(df$minute / resolution) * resolution
 
     f <- function(block) {
         counts <- block %>% group_by(minute) %>% summarise(count=n())
@@ -35,6 +35,7 @@ get_data <- function(badge, window, resolution) {
         group_by(UserId, PostTypeId) %>%
         do(f(.))
 
+    counts$PostTypeId <- factor(counts$PostTypeId, levels=1:3, labels=c('Question', 'Answer', 'Edit'))
     return(counts)
 }
 
@@ -43,15 +44,15 @@ get_coefficients <- function(counts) {
     ## cluster standard errors
     ## dummy for each minute
     ## plot 95% confidence interval
-    fit <- plm(count ~ factor(minute), data=counts, index='UserId')
-    my.coefficients <- data.frame(cbind(confint(fit), coefficients(fit)))
+    fit <- lm(count ~ factor(minute), data=counts)
+    my.coefficients <- data.frame(cbind(confint(fit), coefficients(fit))) + coefficients(fit)[[1]]
     names(my.coefficients) <- c('low', 'high', 'estimate')
     my.coefficients$minute <- as.numeric(gsub('[^-0-9]', '', row.names(my.coefficients)))
     my.coefficients$after <- my.coefficients$minute >= 0
     return(my.coefficients)
 }
 
-my_graph <- function(coefficients) {
+my_graph <- function(coefficients, badge) {
     g <- (
         ggplot(coefficients, aes(x=minute/60/24, y=estimate)) +
         geom_hline(yintercept=0, alpha=0.25) +
@@ -60,18 +61,29 @@ my_graph <- function(coefficients) {
         geom_line() +
         geom_point() +
         theme_classic() +
-        xlab('Days since receiving badge') +
+        xlab(paste('Days since receiving', badge, 'badge')) +
         ylab('Number of actions') +
-        ggtitle('Coefficient estimates with 95% confidence intervals') +
+        ggtitle('Mean number of actions performed over time') +
         facet_grid(PostTypeId ~ ., scales='free_y')
         )
     return(g)
 }
 
-for (k in c("Copy Editor", "Generalist")) {
-    df <- get_data(k, 60*24*60, 60*24)
-    df$PostTypeId <- factor(df$PostTypeId, levels=1:3, labels=c('Question', 'Answer', 'Edit'))
-    coefficients <- df %>% group_by(PostTypeId) %>% do(get_coefficients(.))
-    g <- my_graph(coefficients)
-    ggsave(paste0('figures/', k, '.pdf'), g)
+main <- function() {
+    graphs <- data.frame(
+        badge=c("Copy Editor", "Generalist", "Socratic"),
+        window=c(60*24*60, 60*24*60, 60*24*5),
+        resolution=c(60*24, 60*24, 60*2)
+        )
+
+    for (i in 1:nrow(graphs)) {
+        row <- graphs[i, ]
+        k <- row$badge
+        df <- get_data(k, row$window, row$resolution)
+        coefficients <- df %>% group_by(PostTypeId) %>% do(get_coefficients(.))
+        g <- my_graph(coefficients, k)
+        ggsave(paste0('figures/', k, '.pdf'), g)
+    }
 }
+
+main()
