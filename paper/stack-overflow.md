@@ -1,42 +1,18 @@
 ---
-title: Stack Overflow - Modeling user engagement
+title: Stack Overflow and Gamification - Something from Nothing?
 author: Andrew Marder
 date: \today
 ---
 
-# Next Steps
-
-1. Event study approach: [@miller_principal_2013, @jacobson_earnings_1993, @ashenfelter_estimating_1978]
-
-Answer: Refiner
-Moderation: Copy Editor
-
-Question: Curious : new badge, need a different resolution for this analysis
-
-x
-
-Question
-Answer
-Edits
-
-To do this event study. I need to fill in the posts table.
-
-
-
-2. Sorting around discontinuity: [@lee_crime_2005, @mccrary_manipulation_2008, @urquiola_class-size_2009]
-
-3. How many views does a user earn for reputation points, days on the platform, badges?
-
-# Introduction
+# What is Stack Overflow?
 
 @deterding_game_2011 define "_gamification_ as the use of game design
 elements in non-game contexts."
 [Stack Overflow](http://stackoverflow.com/) is a question and answer
-website designed for programmers. Stack Overflow is gamified as
-follows:
+website designed for programmers that employs a few game elements:
 
 1. A user earns reputation points when another user votes on her posts
-   (5 points when a questions is voted up, 10 points when an answer is
+   (5 points when a question is voted up, 10 points when an answer is
    voted up, 15 points when an answer is accepted, and 2 points when
    an edit is approved).
 
@@ -54,47 +30,28 @@ follows:
 badges awarded for various editing accomplishments are effective in
 encouraging users to make more edits in the two months preceding
 receipt of the badge compared to the two months after receiving the
-badge. This paper aims to build upon the contributions of
-@grant_encouraging_2013 by:
+badge. This paper builds on their findings by:
 
-1. Using regression discontinuity to measure the causal impact of
-   badges on user activity (questions, answers, and edits).[^RDD]
+1. Looking at the impact of badges on all types of user activity (posting questions, posting answers, and editing posts).
 
-2. Applying the same methodology to measure the causal impact of
-   privileges on user activity.
-
-3. Comparing the estimated effects of badges and privileges will help
-   us understand which components of Stack Overflow's gamification are
-   most effective at promoting user engagement.
-
-[^RDD]: @lee_regression_2010 provide an excellent guide for applying
-regression discontinuity designs in empirical research.
+3. Comparing the impact of different badges. Looking at three different badges, each aimed at promoting a different type of user activity.
 
 # Data
 
 There are almost 3.5 million registered users on Stack Overflow. Less than one percent of those users have been awarded the Strunk & White, Copy Editor, or Archaeologist badges.
 
 
-_Let's look at the Commentator badge to see how it affects comments, questions,
-and answers._
+# Do badges encourage action?
 
-# Results
+1. Event study approach: @jacobson_earnings_1993
 
-![Copy editor](figures/Copy Editor.pdf)
+![Impact of Copy Editor badge](figures/Copy Editor.pdf)
 
-![Generalist](figures/Generalist.pdf)
+![Impact of Generalist badge](figures/Generalist.pdf)
 
-\clearpage
+![Impact of Socratic badge](figures/Socratic.pdf)
 
-# Profile views
-
-![Kernel density estimates](figures/density-estimates.pdf)
-
-![Views versus reputation](figures/views-vs-reputation.pdf)
-
-![](figures/coefplot.pdf)\
-
-Add a coefficient plot of badges. Where does it makes sense to put effort?
+# Reputation versus badges
 
 For a number of badges users have complete control over the assignment variable. For privileges based on points, users do not have perfect control. Can I get a historical record of reputation points?
 
