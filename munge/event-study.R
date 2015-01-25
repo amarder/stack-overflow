@@ -1,44 +1,32 @@
 library(dplyr)
 
-## 1. get list of badges of interest
 db <- src_sqlite('my_db.sqlite', create=FALSE)
 
-badges <- tbl(db, 'Badges') %>%
-    select(Date, Name, UserId) %>%
-    filter(Name == "Socratic" | Name == "Generalist" | Name == "Copy Editor") %>%
-    collect()
+## construct query for table of edits
+posts <- tbl(db, 'Posts')
 
-## 2. get list of posts
-users <- as.tbl(data.frame(UserId=unique(badges$UserId)))
-
-posts <- tbl(db, 'Posts') %>%
-    select(CreationDate, OwnerUserId, PostTypeId)
-
-posts_of_interest <- inner_join(posts, users, by=c('OwnerUserId'='UserId'), copy=TRUE)
-
-## 3. get list of edits
 edits <- tbl(db, 'PostHistory') %>%
-    select(CreationDate, PostHistoryTypeId, RevisionGUID, UserId) %>%
-    filter(PostHistoryTypeId == 4 | PostHistoryTypeId == 5 | PostHistoryTypeId == 6)
+    select(CreationDate, PostHistoryTypeId, PostId, UserId) %>%
+    filter(PostHistoryTypeId %in% 4:6) %>%
+    left_join(posts %>% select(Id, OwnerUserId), by=c('PostId'='Id')) %>%
+    filter(UserId != OwnerUserId) %>%
+    group_by(UserId, PostId) %>%
+    summarise(CreationDate=min(CreationDate))
 
-edits_of_interest <- inner_join(edits, users, by='UserId', copy=TRUE)
+## combine questions, answers, and edits into a table of actions
+actions <- posts %>%
+    select(UserId=OwnerUserId, CreationDate, PostTypeId) %>%
+    filter(PostTypeId %in% 1:2) %>%
+    union(edits %>% select(UserId, CreationDate) %>% mutate(PostTypeId=3))
 
-## 4. set up table of actions
-posts <- posts_of_interest %>%
-    filter(PostTypeId == 1 | PostTypeId == 2) %>%
-    select(UserId, CreationDate, PostTypeId) %>%
-    collect()
+actions %>% compute(name='actions', temporary=FALSE)
 
-edits <- edits_of_interest %>%
-    collect() %>%
-    group_by(RevisionGUID) %>%
-    summarise(
-        UserId=first(UserId),
-        CreationDate=first(CreationDate)
-        ) %>%
-    mutate(PostTypeId=3) %>%
-    select(-RevisionGUID)
 
-actions <- bind_rows(posts, edits)
-copy_to(db, actions, 'actions', temporary=FALSE)
-copy_to(db, badges, 'badges_of_interest', temporary=FALSE)
+## set up table of badges
+x <- tbl(db, 'Badges')
+y <- as.tbl(read.csv('munge/badges.csv')) %>% select(name)
+
+badges_of_interest <- inner_join(x, y, by='Name', copy=TRUE) %>%
+    select(Date, Name, UserId)
+
+badges_of_interest %>% compute(name='badges_of_interest', temporary=FALSE)
