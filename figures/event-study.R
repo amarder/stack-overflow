@@ -40,12 +40,12 @@ get_data <- function(badge, window, resolution) {
 }
 
 get_coefficients <- function(counts) {
-    ## user fixed effects
-    ## cluster standard errors
-    ## dummy for each minute
-    ## plot 95% confidence interval
-    fit <- lm(count ~ factor(minute), data=counts)
-    my.coefficients <- data.frame(cbind(confint(fit), coefficients(fit))) + coefficients(fit)[[1]]
+    fit <- plm(log(1 + count) ~ factor(minute), data=counts, index='UserId')
+    vcov <- vcovHC(fit, type="HC0", cluster="group")
+    se <- sqrt(diag(vcov))
+    z <- qnorm(c(0.025, 0.975))
+    ci <- coefficients(fit) + se %o% z
+    my.coefficients <- data.frame(ci, coefficients(fit))
     names(my.coefficients) <- c('low', 'high', 'estimate')
     my.coefficients$minute <- as.numeric(gsub('[^-0-9]', '', row.names(my.coefficients)))
     my.coefficients$after <- my.coefficients$minute >= 0
@@ -62,18 +62,18 @@ my_graph <- function(coefficients, badge) {
         geom_point() +
         theme_classic() +
         xlab(paste('Days since receiving', badge, 'badge')) +
-        ylab('Number of actions') +
-        ggtitle('Mean number of actions performed over time') +
-        facet_grid(PostTypeId ~ ., scales='free_y')
+        ylab('log(1 + number of actions)') +
+        ggtitle('Number of actions performed over time') +
+        facet_grid(PostTypeId ~ .)
         )
     return(g)
 }
 
 main <- function() {
     graphs <- data.frame(
-        badge=c("Copy Editor", "Generalist", "Socratic"),
-        window=c(60*24*60, 60*24*60, 60*24*5),
-        resolution=c(60*24, 60*24, 60*2)
+        badge=c("Copy Editor", "Generalist", "Inquisitive"),
+        window=c(60*24*60, 60*24*30, 60*24*30),
+        resolution=c(60*24, 60*24, 60*24)
         )
 
     for (i in 1:nrow(graphs)) {
