@@ -10,6 +10,11 @@ import json
 import sqlite3
 
 
+def metadata():
+    with open('munge/keep.json') as f:
+        return json.load(f)
+
+
 def fast_iter(context, func):
     for event, elem in context:
         yield func(elem)
@@ -20,9 +25,7 @@ def fast_iter(context, func):
 
 
 def create_processor(table):
-    with open('munge/keep.json') as f:
-        keep = json.load(f)
-    d = keep[table]
+    d = metadata()[table]
 
     element_processors = {
         "integer": lambda x: int(x) if x is not None else None,
@@ -69,11 +72,12 @@ def tables_in(path):
 def xml2sql(infolder, outdb):
     existing_tables = tables_in(outdb)
     engine = sqlalchemy.create_engine('sqlite:///%s' % outdb)
-    tables = ['Users', 'Badges', 'Comments', 'PostHistory', 'Posts']
+    tables = metadata().keys()
     for k in tables:
         if k not in existing_tables:
             print 'Creating table of %s.' % k
             for df in blocks(infolder, k):
+                df.set_index('Id', inplace=True)
                 df.to_sql(k, engine, if_exists='append')
 
 

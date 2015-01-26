@@ -9,44 +9,20 @@
         "Id": "integer",
         "Reputation": "integer",
         "CreationDate": "datetime",
-        "DisplayName": "string",
         "LastAccessDate": "datetime",
-        "Views": "integer",
-        "UpVotes": "integer",
-        "DownVotes": "integer",
-        "AccountId": "integer"
+        "Views": "integer"
     },
     "Posts": {
         "Id": "integer",
         "PostTypeId": "integer",
-        "AcceptedAnswerId": "integer",
         "CreationDate": "datetime",
-        "Score": "integer",
-        "ViewCount": "integer",
-        "OwnerUserId": "integer",
-        "Tags": "string",
-        "AnswerCount": "integer",
-        "CommentCount": "integer"
-    },
-    "Votes": {
-        "Id": "integer",
-        "PostId": "integer",
-        "VoteTypeId": "integer",
-        "CreationDate": "datetime"
-    },
-    "Comments": {
-        "Id": "integer",
-        "PostId": "integer",
-        "Score": "integer",
-        "CreationDate": "datetime",
-        "UserId": "integer"
+        "OwnerUserId": "integer"
     },
     "PostHistory": {
         "Id": "integer",
         "PostHistoryTypeId": "integer",
         "PostId": "integer",
         "CreationDate": "datetime",
-        "UserId": "integer",
-        "RevisionGUID": "string"
+        "UserId": "integer"
     }
 }
