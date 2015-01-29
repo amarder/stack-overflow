@@ -33,6 +33,7 @@ special_characters = {
     u'’': u"'",
     u'ç': ur'\c{c}',
     u'ó': ur"\'{o}",
+    u'ø': ur"\o",
 }
 
 def clean_lines(path):

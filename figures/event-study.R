@@ -16,6 +16,7 @@ get_data <- function(badge, window, resolution) {
     t <- ymd_hms(y$Date)
     keep <- (t - min(t) >= window * 60) & (max(t) - t >= window * 60)
     y <- y[keep, ]
+    print(paste(badge, ':', nrow(y)))
 
     df <- inner_join(actions, y, by='UserId', copy=TRUE) %>% collect()
 
@@ -40,7 +41,7 @@ get_data <- function(badge, window, resolution) {
 }
 
 get_coefficients <- function(counts) {
-    fit <- plm(log(1 + count) ~ factor(minute), data=counts, index='UserId')
+    fit <- plm(count ~ factor(minute), data=counts, index='UserId')
     vcov <- vcovHC(fit, type="HC0", cluster="group")
     se <- sqrt(diag(vcov))
     z <- qnorm(c(0.025, 0.975))
@@ -48,22 +49,18 @@ get_coefficients <- function(counts) {
     my.coefficients <- data.frame(ci, coefficients(fit))
     names(my.coefficients) <- c('low', 'high', 'estimate')
     my.coefficients$minute <- as.numeric(gsub('[^-0-9]', '', row.names(my.coefficients)))
-    my.coefficients$after <- my.coefficients$minute >= 0
     return(my.coefficients)
 }
 
 my_graph <- function(coefficients, badge) {
     g <- (
         ggplot(coefficients, aes(x=minute/60/24, y=estimate)) +
-        geom_hline(yintercept=0, alpha=0.25) +
-        geom_vline(xintercept=0, alpha=0.25) +
         geom_ribbon(aes(x=minute/60/24, ymin=low, ymax=high), alpha=0.25) +
         geom_line() +
-        geom_point() +
         theme_classic() +
         xlab(paste('Days since receiving', badge, 'badge')) +
-        ylab('log(1 + number of actions)') +
-        ggtitle('Number of actions performed over time') +
+        ylab('Number of actions') +
+        ggtitle('Mean number of actions performed over time') +
         facet_grid(PostTypeId ~ .)
         )
     return(g)
@@ -71,9 +68,9 @@ my_graph <- function(coefficients, badge) {
 
 main <- function() {
     graphs <- data.frame(
-        badge=c("Copy Editor", "Generalist", "Inquisitive"),
-        window=c(60*24*60, 60*24*30, 60*24*30),
-        resolution=c(60*24, 60*24, 60*24)
+        badge=c("Strunk & White", "Archaeologist", "Copy Editor", "Generalist", "Inquisitive"),
+        window=60*24*30,
+        resolution=60*24
         )
 
     for (i in 1:nrow(graphs)) {
@@ -82,7 +79,7 @@ main <- function() {
         df <- get_data(k, row$window, row$resolution)
         coefficients <- df %>% group_by(PostTypeId) %>% do(get_coefficients(.))
         g <- my_graph(coefficients, k)
-        ggsave(paste0('figures/', k, '.pdf'), g)
+        ggsave(paste0('figures/', k, '.pdf'), g, height=4)
     }
 }
 

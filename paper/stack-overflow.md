@@ -43,49 +43,43 @@ There are almost 3.5 million registered users on Stack Overflow. Less than one p
 
 # Do badges encourage action?
 
-1. Event study approach: @jacobson_earnings_1993
+@grant_encouraging_2013 find that users who receive a badge for editing make more edits in the two-month window before receiving the badge compared to the two-month window after receiving the badge. I extend their work by exploring, on average, how many questions, answers, and edits a user posts around the time of receiving a badge. Let $y_{it}$ be the number of edits user $i$ makes on day $t$, and
 
-![Impact of Copy Editor badge](figures/Copy Editor.pdf)
+$$
+D_{it}^k =
+\begin{cases}
+1 & \text{if user $i$ earns the badge on day } t+k, \\
+0 & \text{otherwise.}
+\end{cases}
+$$
 
-![Impact of Generalist badge](figures/Generalist.pdf)
+To start, I regress the number of edits user $i$ makes on day $t$ on a user fixed effect and a set of dummy variables indicating the number of days before receiving the badge of interest
 
-![Impact of Socratic badge](figures/Socratic.pdf)
+$$
+y_{it} = \alpha_i + \sum_{k=-29}^{30} D_{it}^k \delta_k + \epsilon_{it}.
+$$
 
-# Reputation versus badges
+Figure \ref{edit} plots the mean number of actions taken in the days around receiving the badge. The 95% confidence interval is tight around the line, standard errors were clustered at the user level. Confirming the conclusion of @grant_encouraging_2013, we see that badge recipients drastically increase activity before receiving the Copy Editor badge making 24.6 edits in the 24 hours immediately before receiving the badge and dropping down to 2.9 edits in the 24 hours immediately after receiving the badge.
 
-For a number of badges users have complete control over the assignment variable. For privileges based on points, users do not have perfect control. Can I get a historical record of reputation points?
+![\label{edit} Average user behavior around receiving the Copy Editor badge](figures/Copy Editor.pdf)
 
-It looks like I'll have to use the API to get some record of reputation. Maybe I'll have to use this for a subsample of users with specific privileges. That could make things a bit faster.
+Although plotting the mean activity of the 1206 recipients of the Copy Editor badge it seems reasonable to conclude these users increase their activity on the site because they want to earn the badge, it seems unreasonable to assume these users would be completely inactive if the badge did not exist. I apply the event study approach of @jacobson_earnings_1993 to further explore how user behavior changes around the time of receiving a badge. I add a time fixed effect
 
-Privileges are based on your current reputation. Unfortunately Stack Exchange does not want to share exact reputation data
+$$
+y_{it} = \alpha_i + \gamma_t + \sum_{k=-4}^{4} D_{it}^k \delta_k + \epsilon_{it}.
+$$
 
-Looking at the three endpoints for getting reputation data [here](http://api.stackexchange.com/docs/), we can get some seriously flawed public data that won't work well for determining priviliges or we'll have to authenticate users to get their full history. That doesn't seem feasible.
+I also include 1206 users that did not receive the Copy Editor badge in the regression, I find this synthetic control group using nearest neighbor matching based on account creation date [@ho_matching_2007].
 
-http://stackapps.com/questions/4670/users-id-and-users-id-reputation-disagree-over-2-accept-answer-bonuses/
-http://stackapps.com/questions/3320/reputation-api-to-display-a-reputation-history/
-http://stackapps.com/questions/2957/is-it-possible-to-get-daily-reputation-change-for-a-user-via-the-api/
+TODO: Need to do clean event study approach.
 
-http://api.stackexchange.com/docs/types/reputation-history
+# How much action?
 
-what reputation events are private?
+As noted by @miller_principal_2013, one cannot make causal claims using an event study approach. We need a source of exogenous variation to reliably estimate the causal impact of badges.
 
-I appreciate the API has three methods for retrieving a user's reputation history:
+TODO: Insert timeline of badges.
 
-1. [/users/{id}/reputation-history/full](http://api.stackexchange.com/docs/full-reputation-history) requires the user to authorize access and returns a complete history of reputation changes.
-
-2. [/users/{ids}/reputation-history](http://api.stackexchange.com/docs/reputation-history) returns all public changes in a user's reputation.
-
-3. [/users/{ids}/reputation](http://api.stackexchange.com/docs/reputation-on-users) does some scrubbing of the reputation change events to keep private events private, but gives a "reasonable display of reputation trends."
-
-The third option will be best for a fuzzy RD design.
-
-Which reputation events are private?
-
-I want to recreate a user's reputation history using the API. I understand that the public version of this data has been scrubbed to hide private reputation events, but I haven't been able to find a definitive list of private reputation events. Is there a list 
-
-http://stackoverflow.com/help/whats-reputation
-
-I can compute a rough reputation number, measurement error as motivation for fuzzy RD design. I will use this API endpoint [/users/{ids}/reputation](http://api.stackexchange.com/docs/reputation-on-users).
+In this section we use a difference-in-differences model to estimate the causal impact of introducing three new badges to Stack Overflow.
 
 # Conclusion
 
