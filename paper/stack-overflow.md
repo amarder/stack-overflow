@@ -71,7 +71,7 @@ $$
 
 I also include 1206 users that did not receive the Copy Editor badge in the regression, I find this synthetic control group using nearest neighbor matching based on account creation date [@ho_matching_2007].
 
-TODO: Need to do clean event study approach.
+![\label{edit} Event study around badges awarded for asking questions](figures/questions.pdf)
 
 # How much action?
 
@@ -80,6 +80,9 @@ As noted by @miller_principal_2013, one cannot make causal claims using an event
 TODO: Insert timeline of badges.
 
 In this section we use a difference-in-differences model to estimate the causal impact of introducing three new badges to Stack Overflow.
+
+Let's do an event study for these three badges:
+Looks like I'll have to randomly select some of these users.
 
 # Conclusion
 

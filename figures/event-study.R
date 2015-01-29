@@ -4,6 +4,8 @@ library(ggplot2)
 library(plm)
 library(reshape2)
 
+set.seed(1)
+
 get_data <- function(badge, window, resolution) {
     db <- src_sqlite('my_db.sqlite', create=FALSE)
     badges <- tbl(db, 'badges_of_interest')
@@ -17,6 +19,10 @@ get_data <- function(badge, window, resolution) {
     keep <- (t - min(t) >= window * 60) & (max(t) - t >= window * 60)
     y <- y[keep, ]
     print(paste(badge, ':', nrow(y)))
+    ## if (nrow(y) > 1000) {
+    ##     print('Selecting 1000 users at random.')
+    ##     y <- y %>% sample_n(1000) %>% collect()
+    ## }
 
     df <- inner_join(actions, y, by='UserId', copy=TRUE) %>% collect()
 
@@ -41,7 +47,7 @@ get_data <- function(badge, window, resolution) {
 }
 
 get_coefficients <- function(counts) {
-    fit <- plm(count ~ factor(minute), data=counts, index='UserId')
+    fit <- plm(log(1 + count) ~ factor(minute), data=counts, index='UserId')
     vcov <- vcovHC(fit, type="HC0", cluster="group")
     se <- sqrt(diag(vcov))
     z <- qnorm(c(0.025, 0.975))
@@ -54,30 +60,39 @@ get_coefficients <- function(counts) {
 
 my_graph <- function(coefficients) {
     g <- (
-        ggplot(coefficients, aes(x=minute/60/24, y=estimate)) +
-        geom_ribbon(aes(x=minute/60/24, ymin=low, ymax=high), alpha=0.25) +
+        ggplot(coefficients, aes(x=minute/60/24 - 0.5, y=estimate, group=minute>0)) +
+        geom_ribbon(aes(x=minute/60/24 - 0.5, ymin=low, ymax=high), alpha=0.25) +
         geom_line() +
         theme_bw() +
         xlab(paste('Days since receiving badge')) +
-        ylab('Number of actions') +
-        facet_grid(PostTypeId ~ badge)
+        ylab('log(1 + number of actions)') +
+        facet_grid(PostTypeId ~ badge) +
+        scale_x_continuous(breaks=seq(-30, 30, 15))
         )
     return(g)
 }
 
-    l <- lapply(c("Strunk & White", "Archaeologist", "Copy Editor"), function(x) {
+combined_coefficients <- function(tags) {
+    l <- lapply(tags, function(x) {
         df <- get_data(x, window=60*24*30, resolution=60*24)
         coefficients <- df %>% group_by(PostTypeId) %>% do(get_coefficients(.))
         coefficients$badge <- x
         return(coefficients)
     })
-    long <- do.call(bind_rows, l)
-    g <- (
-        my_graph(long) +
-        scale_x_continuous(breaks=seq(-30, 30, 15)) +
-        scale_y_continuous(breaks=seq(0, 40, 20)) +
-        geom_vline(xintercept=0, color='red', alpha=0.25) +
-        theme_bw() +
-        ggtitle('')
-        )
+    return(do.call(bind_rows, l))
+}
+
+edit_graph <- function() {
+    long <- combined_coefficients(c("Strunk & White", "Archaeologist", "Copy Editor"))
+    g <- my_graph(long)
     ggsave('figures/editing.pdf', g, height=5, width=9)
+}
+
+question_graph <- function() {
+    long <- combined_coefficients(c("Inquisitive", "Curious"))
+    g <- my_graph(long)
+    ggsave('figures/questions.pdf', g, height=5, width=9)
+}
+
+edit_graph()
+question_graph()
