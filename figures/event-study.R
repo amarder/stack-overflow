@@ -52,35 +52,32 @@ get_coefficients <- function(counts) {
     return(my.coefficients)
 }
 
-my_graph <- function(coefficients, badge) {
+my_graph <- function(coefficients) {
     g <- (
         ggplot(coefficients, aes(x=minute/60/24, y=estimate)) +
         geom_ribbon(aes(x=minute/60/24, ymin=low, ymax=high), alpha=0.25) +
         geom_line() +
-        theme_classic() +
-        xlab(paste('Days since receiving', badge, 'badge')) +
+        theme_bw() +
+        xlab(paste('Days since receiving badge')) +
         ylab('Number of actions') +
-        ggtitle('Mean number of actions performed over time') +
-        facet_grid(PostTypeId ~ .)
+        facet_grid(PostTypeId ~ badge)
         )
     return(g)
 }
 
-main <- function() {
-    graphs <- data.frame(
-        badge=c("Strunk & White", "Archaeologist", "Copy Editor", "Generalist", "Inquisitive"),
-        window=60*24*30,
-        resolution=60*24
-        )
-
-    for (i in 1:nrow(graphs)) {
-        row <- graphs[i, ]
-        k <- row$badge
-        df <- get_data(k, row$window, row$resolution)
+    l <- lapply(c("Strunk & White", "Archaeologist", "Copy Editor"), function(x) {
+        df <- get_data(x, window=60*24*30, resolution=60*24)
         coefficients <- df %>% group_by(PostTypeId) %>% do(get_coefficients(.))
-        g <- my_graph(coefficients, k)
-        ggsave(paste0('figures/', k, '.pdf'), g, height=4)
-    }
-}
-
-main()
+        coefficients$badge <- x
+        return(coefficients)
+    })
+    long <- do.call(bind_rows, l)
+    g <- (
+        my_graph(long) +
+        scale_x_continuous(breaks=seq(-30, 30, 15)) +
+        scale_y_continuous(breaks=seq(0, 40, 20)) +
+        geom_vline(xintercept=0, color='red', alpha=0.25) +
+        theme_bw() +
+        ggtitle('')
+        )
+    ggsave('figures/editing.pdf', g, height=5, width=9)

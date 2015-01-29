@@ -53,7 +53,7 @@ D_{it}^k =
 \end{cases}
 $$
 
-To start, I regress the number of edits user $i$ makes on day $t$ on a user fixed effect and a set of dummy variables indicating the number of days before receiving the badge of interest
+I regress the number of edits user $i$ makes on day $t$ on a user fixed effect and a set of dummy variables to measure indicating the number of days before receiving the badge of interest
 
 $$
 y_{it} = \alpha_i + \sum_{k=-29}^{30} D_{it}^k \delta_k + \epsilon_{it}.
@@ -61,7 +61,7 @@ $$
 
 Figure \ref{edit} plots the mean number of actions taken in the days around receiving the badge. The 95% confidence interval is tight around the line, standard errors were clustered at the user level. Confirming the conclusion of @grant_encouraging_2013, we see that badge recipients drastically increase activity before receiving the Copy Editor badge making 24.6 edits in the 24 hours immediately before receiving the badge and dropping down to 2.9 edits in the 24 hours immediately after receiving the badge.
 
-![\label{edit} Average user behavior around receiving the Copy Editor badge](figures/Copy Editor.pdf)
+![\label{edit} Mean number of actions performed over time](figures/editing.pdf)
 
 Although plotting the mean activity of the 1206 recipients of the Copy Editor badge it seems reasonable to conclude these users increase their activity on the site because they want to earn the badge, it seems unreasonable to assume these users would be completely inactive if the badge did not exist. I apply the event study approach of @jacobson_earnings_1993 to further explore how user behavior changes around the time of receiving a badge. I add a time fixed effect
 
