@@ -3,31 +3,34 @@ library(grid)
 library(dplyr)
 library(lubridate)
 
-db <- src_sqlite('../my_db.sqlite', create=FALSE)
+db <- src_sqlite('my_db.sqlite', create=FALSE)
 badges <- tbl(db, 'Badges')
-info <- read.csv('../munge/badges.csv')
+info <- read.csv('munge/badges.csv')
 keep <- data.frame(Name=info$name)
 badges_of_interest <- inner_join(badges, keep, by='Name', copy=TRUE)
 intro <- badges_of_interest %>% group_by(Name) %>% summarise(t=min(Date)) %>% collect()
 
 intro$time <- ymd_hms(intro$t)
-intro$time <- year(intro$time) + month(intro$time) / 12
+intro$time <- year(intro$time) + month(intro$time)/12
 intro <- intro[order(intro$time), ]
-intro$y <- 1 + nrow(intro) - (1:nrow(intro))
 
 timeline <- function(data) {
     g <- (
         ggplot(data) +
-        geom_segment(aes(x=time, y=y, xend=time), yend=0) +
-        geom_hline(yintercept=0) +
-        geom_text(aes(x=time, y=y, label=Name), hjust=-0.1, vjust=0, parse=FALSE) +
-        geom_point(aes(x=time, y=y)) +
+        geom_point(aes(x=0, y=time)) +
+        geom_text(aes(x=0.05, y=time, label=badges), hjust=0, size=4) +
         theme_classic() +
-        theme(axis.line.y=element_blank(), axis.title=element_blank(), axis.ticks.y=element_blank(), axis.text.y=element_blank())
+        theme(axis.line.x=element_blank(), axis.title=element_blank(), axis.ticks.x=element_blank(), axis.text.x=element_blank()) +
+        xlim(0, 3) + ylim(2015, 2008)
         )
     return(g)
 }
 
-print(
-    timeline(as.data.frame(intro)) + xlim(2008, 2015)
-    )
+f <- function(x) {
+    paste(x, collapse=', ')
+}
+df <- intro %>% group_by(time) %>% summarise(badges=f(Name))
+df$y <- 0
+
+g <- timeline(as.data.frame(df))
+ggsave('figures/timeline.pdf', g, height=15, width=25)
