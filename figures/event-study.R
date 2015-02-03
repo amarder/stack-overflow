@@ -47,14 +47,22 @@ get_data <- function(badge, window, resolution) {
 }
 
 get_coefficients <- function(counts) {
-    fit <- plm(log(1 + count) ~ factor(minute), data=counts, index='UserId')
-    vcov <- vcovHC(fit, type="HC0", cluster="group")
-    se <- sqrt(diag(vcov))
-    z <- qnorm(c(0.025, 0.975))
-    ci <- coefficients(fit) + se %o% z
-    my.coefficients <- data.frame(ci, coefficients(fit))
-    names(my.coefficients) <- c('low', 'high', 'estimate')
-    my.coefficients$minute <- as.numeric(gsub('[^-0-9]', '', row.names(my.coefficients)))
+    data_path <- 'temp.csv'
+    est_path <- 'beta.csv'
+
+    shift <- min(counts$minute)
+    counts$minute <- counts$minute - shift
+    write.csv(counts, data_path, row.names=FALSE)
+    cmd <- paste('stata -b do figures/my_poisson.do', data_path, est_path)
+    system(cmd)
+
+    my.coefficients <- read.csv(est_path, skip=1)
+    names(my.coefficients) <- c('minute', 'estimate', 'low', 'high')
+    my.coefficients$minute <- as.numeric(gsub('[^-0-9]', '', my.coefficients$minute)) + shift
+
+    cleanup <- paste('rm', data_path, est_path, 'my_poisson.log')
+    system(cleanup)
+
     return(my.coefficients)
 }
 
@@ -65,7 +73,7 @@ my_graph <- function(coefficients) {
         geom_line() +
         theme_bw() +
         xlab(paste('Days since receiving badge')) +
-        ylab('log(1 + number of actions)') +
+        ylab('Number of actions') +
         facet_grid(PostTypeId ~ badge) +
         scale_x_continuous(breaks=seq(-30, 30, 15))
         )
