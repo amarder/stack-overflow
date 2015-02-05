@@ -1,8 +1,6 @@
 library(dplyr)
 library(lubridate)
 library(ggplot2)
-library(plm)
-library(reshape2)
 
 set.seed(1)
 
@@ -53,7 +51,7 @@ get_coefficients <- function(counts) {
     shift <- min(counts$minute)
     counts$minute <- counts$minute - shift
     write.csv(counts, data_path, row.names=FALSE)
-    cmd <- paste('stata -b do figures/my_poisson.do', data_path, est_path)
+    cmd <- paste('stata-mp -b do figures/my_poisson.do', data_path, est_path)
     system(cmd)
 
     my.coefficients <- read.csv(est_path, skip=1)
@@ -68,12 +66,12 @@ get_coefficients <- function(counts) {
 
 my_graph <- function(coefficients) {
     g <- (
-        ggplot(coefficients, aes(x=minute/60/24 - 0.5, y=estimate, group=minute>0)) +
-        geom_ribbon(aes(x=minute/60/24 - 0.5, ymin=low, ymax=high), alpha=0.25) +
+        ggplot(coefficients, aes(x=minute/60/24, y=estimate, group=minute>0)) +
+        geom_ribbon(aes(x=minute/60/24, ymin=low, ymax=high), alpha=0.25) +
         geom_line() +
         theme_bw() +
         xlab(paste('Days since receiving badge')) +
-        ylab('Number of actions') +
+        ylab('Number of actions, log(1 + y)') +
         facet_grid(PostTypeId ~ badge) +
         scale_x_continuous(breaks=seq(-30, 30, 15))
         )
