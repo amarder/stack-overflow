@@ -41,9 +41,11 @@ badge. This paper builds on their findings by:
 There are almost 3.5 million registered users on Stack Overflow. Less than one percent of those users have been awarded the Strunk & White, Copy Editor, or Archaeologist badges.
 
 
-# Do badges encourage action?
+# How do users behave when earning badges?
 
 @grant_encouraging_2013 find that users who receive a badge for editing make more edits in the two-month window before receiving the badge compared to the two-month window after receiving the badge. I extend their work by exploring, on average, how many questions, answers, and edits a user posts around the time of receiving a badge. Let $y_{it}$ be the number of edits user $i$ makes on day $t$, and
+
+@jacobson_earnings_1993
 
 $$
 D_{it}^k =
@@ -53,37 +55,28 @@ D_{it}^k =
 \end{cases}
 $$
 
-I regress the number of edits user $i$ makes on day $t$ on a user fixed effect and a set of dummy variables to measure indicating the number of days before receiving the badge of interest
+I regress the number of edits user $i$ makes on day $t$ on a user fixed effect $\alpha_i$ and a set of dummy variables indicating whether the user received the badge of interest on day $t+k$
 
 $$
-y_{it} = \alpha_i + \sum_{k=-29}^{30} D_{it}^k \delta_k + \epsilon_{it}.
+\log(1 + y_{it}) = \alpha_i + \sum_{k=-29}^{30} D_{it}^k \delta_k + \epsilon_{it}.
 $$
 
-Figure \ref{edit} plots the mean number of actions taken in the days around receiving the badge. The 95% confidence interval is tight around the line, standard errors were clustered at the user level. Confirming the conclusion of @grant_encouraging_2013, we see that badge recipients drastically increase activity before receiving the Copy Editor badge making 24.6 edits in the 24 hours immediately before receiving the badge and dropping down to 2.9 edits in the 24 hours immediately after receiving the badge.
+This model was estimated using ordinary least squares, standard errors were clustered at the user level.
+
+Let $t_i^*$ denote the day user $i$ recieves the badge. Figure \ref{edit} plots the expected number of actions taken on the $k$'th day since receiving the badge
+
+$$
+f(k) = E \left[ \log(1 + y_{it}) \; | \; t=t^*_i + k \right].
+$$
+
+The 95% confidence interval is tight around the line, standard errors were calculated using the delta method [@williams_using_2012]. Confirming the conclusion of @grant_encouraging_2013, we see that badge recipients drastically increase activity before receiving the Copy Editor badge making 24.6 edits in the 24 hours immediately before receiving the badge and dropping down to 2.9 edits in the 24 hours immediately after receiving the badge.
 
 ![\label{edit} Mean number of actions performed over time](figures/editing.pdf)
 
-Although plotting the mean activity of the 1206 recipients of the Copy Editor badge it seems reasonable to conclude these users increase their activity on the site because they want to earn the badge, it seems unreasonable to assume these users would be completely inactive if the badge did not exist. I apply the event study approach of @jacobson_earnings_1993 to further explore how user behavior changes around the time of receiving a badge. I add a time fixed effect
-
-$$
-y_{it} = \alpha_i + \gamma_t + \sum_{k=-4}^{4} D_{it}^k \delta_k + \epsilon_{it}.
-$$
-
-I also include 1206 users that did not receive the Copy Editor badge in the regression, I find this synthetic control group using nearest neighbor matching based on account creation date [@ho_matching_2007].
-
-![\label{edit} Event study around badges awarded for asking questions](figures/questions.pdf)
-
-# How much action?
-
-As noted by @miller_principal_2013, one cannot make causal claims using an event study approach. We need a source of exogenous variation to reliably estimate the causal impact of badges.
-
-TODO: Insert timeline of badges.
-
-In this section we use a difference-in-differences model to estimate the causal impact of introducing three new badges to Stack Overflow.
-
-Let's do an event study for these three badges:
-Looks like I'll have to randomly select some of these users.
+![\label{questioning} Event study around badges awarded for asking questions](figures/questions.pdf)
 
 # Conclusion
+
+As a fan of Holland and Rubin's motto "no causation without manipulation", it is important to note that this paper does not identify the causal effect of badges [@holland_statistics_1986]. To reliably estimate the causal impact of badges of user activity we need a source of exogenous variation [@miller_principal_2013]. This paper contributes to the literature by describing more clearly how users behave around receiving badges.
 
 # References
