@@ -43,9 +43,7 @@ There are almost 3.5 million registered users on Stack Overflow. Less than one p
 
 # How do users behave when earning badges?
 
-@grant_encouraging_2013 find that users who receive a badge for editing make more edits in the two-month window before receiving the badge compared to the two-month window after receiving the badge. I extend their work by exploring, on average, how many questions, answers, and edits a user posts around the time of receiving a badge. Let $y_{it}$ be the number of edits user $i$ makes on day $t$, and
-
-@jacobson_earnings_1993
+@grant_encouraging_2013 find that users who receive a badge for editing make more edits in the two-month window before receiving the badge compared to the two-month window after receiving the badge. I extend their work by exploring, on average, how many questions, answers, and edits a user posts around the time of receiving a badge. Let $y_{it}$ be the number of edits user $i$ makes on day $t$. Following the approach of @jacobson_earnings_1993 define the dummy variable
 
 $$
 D_{it}^k =
@@ -61,7 +59,7 @@ $$
 \log(1 + y_{it}) = \alpha_i + \sum_{k=-29}^{30} D_{it}^k \delta_k + \epsilon_{it}.
 $$
 
-This model was estimated using ordinary least squares, standard errors were clustered at the user level.
+The model parameters are estimated using an ordinary least squares regression, and standard errors are clustered at the user level.
 
 Let $t_i^*$ denote the day user $i$ recieves the badge. Figure \ref{edit} plots the expected number of actions taken on the $k$'th day since receiving the badge
 
@@ -69,7 +67,7 @@ $$
 f(k) = E \left[ \log(1 + y_{it}) \; | \; t=t^*_i + k \right].
 $$
 
-The 95% confidence interval is tight around the line, standard errors were calculated using the delta method [@williams_using_2012]. Confirming the conclusion of @grant_encouraging_2013, we see that badge recipients drastically increase activity before receiving the Copy Editor badge making 24.6 edits in the 24 hours immediately before receiving the badge and dropping down to 2.9 edits in the 24 hours immediately after receiving the badge.
+The 95% confidence interval is tight around the line, standard errors were calculated using the delta method [@williams_using_2012]. Figure \ref{edit} confirms the findings of @grant_encouraging_2013, editing increases gradually before receiving the badge with a large jump in activity in the day immediately before earning the badge. We also see that editing drops quickly immediately after receiving the badge and gradually declines over time. It's interesting to see that the  we see that badge recipients drastically increase activity before receiving the Copy Editor badge making 24.6 edits in the 24 hours immediately before receiving the badge and dropping down to 2.9 edits in the 24 hours immediately after receiving the badge.
 
 ![\label{edit} Mean number of actions performed over time](figures/editing.pdf)
 
