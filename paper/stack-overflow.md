@@ -67,14 +67,28 @@ $$
 f(k) = E \left[ \log(1 + y_{it}) \; | \; t=t^*_i + k \right].
 $$
 
-The 95% confidence interval is tight around the line, standard errors were calculated using the delta method [@williams_using_2012]. Figure \ref{edit} confirms the findings of @grant_encouraging_2013, editing increases gradually before receiving the badge with a large jump in activity in the day immediately before earning the badge. We also see that editing drops quickly immediately after receiving the badge and gradually declines over time. It's interesting to see that the  we see that badge recipients drastically increase activity before receiving the Copy Editor badge making 24.6 edits in the 24 hours immediately before receiving the badge and dropping down to 2.9 edits in the 24 hours immediately after receiving the badge.
+Strunk & White Edited 80 posts
+Copy Editor Edited 500 posts (excluding own or deleted posts and tag edits)
+Archaelogist Edited 100 posts that were inactive for 6 months
+Curious Asked a well-received question on 5 separate days, and maintained a positive question record
+Inquisitive Asked a well-received question on 30 separate days, and maintained a positive question record
 
-![\label{edit} Mean number of actions performed over time](figures/editing.pdf)
+The 95% confidence interval is tight around the line, standard errors were calculated using the delta method [@williams_using_2012]. Figure \ref{edit} confirms the findings of @grant_encouraging_2013, editing increases gradually before receiving the badge with a large jump in activity in the day immediately before earning the badge. We also see that editing drops quickly immediately after receiving the badge and gradually declines over time. It's interesting to see how few questions were asked by the recipients of the editing badges in the two months around receiving the badge, and to see that the rate of answering questions tends to be constant throught the two month window.
 
-![\label{questioning} Event study around badges awarded for asking questions](figures/questions.pdf)
+![\label{edit} User activity over time - badges for edits](figures/editing.pdf)
+
+Figure \ref{questioning} plots user activity around receiving badges for asking questions. User activity around question badges differs in interesting ways to badges for edits:
+
+1. All types of actions tend to increase in the thirty days leading up to earning the badge. In Figure \ref{edit}, only edits increased. In Figure \ref{questioning}, the number of questions, answers, and edits posted all increased.
+
+2. User activity stops almost immediately after receiving the badge. This makes me think something might be wrong with the data. It's too stark.
+
+![\label{questioning} User activity over time - badges for questions](figures/questions.pdf)
 
 # Conclusion
 
 As a fan of Holland and Rubin's motto "no causation without manipulation", it is important to note that this paper does not identify the causal effect of badges [@holland_statistics_1986]. To reliably estimate the causal impact of badges of user activity we need a source of exogenous variation [@miller_principal_2013]. This paper contributes to the literature by describing more clearly how users behave around receiving badges.
+
+@antin_badges_2011
 
 # References
