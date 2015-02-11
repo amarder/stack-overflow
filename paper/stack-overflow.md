@@ -2,7 +2,11 @@
 title: Stack Overflow and Gamification - Something from Nothing?
 author: Andrew Marder
 date: \today
+nocite: |
+  @Antin2011
 ---
+
+# Introduction
 
 "Stack Exchange is a network of 130+ Q&A communities including Stack Overflow, the preeminent site for programmers to find, ask, and answer questions about software development...Stack Overflow Careers connects Stack Overflow users with employers." On January 20, @Spoelsky2015 announced that Stack Exchange had raised $40 million in venture capital funding. Stack Exchange gives users who ask questions access to expert technical help for free. Users who answer questions build their reputation for technical expertise, and use that reputation to find better jobs.
 
@@ -10,7 +14,7 @@ Although Stack Overflow's creation was strongly rooted in computer science, the 
 
 This paper takes a first step along the path of applying econometric analysis to publicly available Stack Overflow data. Specifically, I study how users behave around the time they are awarded badges. By taking a closer look at user actions we start to get an idea of how badges motivate user contributions.
 
-# What is Stack Overflow?
+# Rules of the game
 
 @Deterding2011 define "_gamification_ as the use of game design
 elements in non-game contexts."
@@ -42,7 +46,7 @@ badge. This paper builds on their findings by:
 
 3. Comparing the impact of different badges. Looking at three different badges, each aimed at promoting a different type of user activity.
 
-# How do users behave when earning badges?
+# How users behave when earning badges
 
 @Grant2013 find that users who receive a badge for editing make more edits in the two-month window before receiving the badge compared to the two-month window after receiving the badge. I extend their work by exploring, on average, how many questions, answers, and edits a user posts around the time of receiving a badge. Let $y_{it}$ be the number of edits user $i$ makes on day $t$. Following the approach of @Jacobson1993 define the dummy variable
 
@@ -88,8 +92,10 @@ Figure \ref{questioning} plots user activity around receiving badges for asking 
 
 # Conclusion
 
-As a fan of Holland and Rubin's motto "no causation without manipulation", it is important to note that this paper does not identify the causal effect of badges [@Holland1986]. To reliably estimate the causal impact of badges of user activity we need a source of exogenous variation [@Miller2013]. This paper contributes to the literature by describing more clearly how users behave around receiving badges.
+In line with Spence's [-@Spence1973] model of job market signaling, Stack Overflow provides a platform for job searchers to signal their ability by answering difficult technical questions publicly. In the process, job searchers contribute to the provision of a valuable public good, combating the tragedy of the commons [@Hardin1968].
 
-@Antin2011
+When interpreting the empirical results of this paper, please consider Holland and Rubin's motto "no causation without manipulation" [@Holland1986]. There is no manipulation of the explanatory variable in this study, consequently we have not identified the causal effect of badges. To estimate the causal impact of badges on user activity we need to find a source of exogenous variation [@Miller2013].
+
+This paper confirms the empirical observation of @Grant2013, on average users who receive a badge for editing make more edits in the 30 days prior to receiving the badge compared to the 30 days after receiving the badge. In addition, we show that the average number of questions and answers posted do not change around the receipt of an editing badge. Finally, we show that users who received badges for asking questions behaved differently. In particular, we found that the number of answers and edits posted followed a similar time trend as the number of questions asked. This suggests there may be an interesting spillover effect, encouraging users to ask more questions may have a secondary effect of encouraging general activity on the site.
 
 # References
