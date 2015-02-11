@@ -7,7 +7,7 @@ figures/event-study.pdf: figures/event-study.R my_db.sqlite
 	Rscript figures/event-study.R
 
 paper/clean.bib: paper/clean-references.py paper/raw.bib
-	python paper/clean-references.py paper/raw.bib paper/clean.bib
+	python paper/clean-references.py paper/raw.bib > paper/clean.bib
 
 paper/stack-overflow.pdf: paper/stack-overflow.md paper/clean.bib
 	pandoc paper/stack-overflow.md -V geometry:margin=1in --biblio paper/clean.bib --filter pandoc-citeproc -o paper/stack-overflow.pdf

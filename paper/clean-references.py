@@ -17,6 +17,8 @@ keep = [
     'year',
     'pages',
     'booktitle',
+    'url',
+    'doi',
 ]
 
 special_characters = {
@@ -34,35 +36,38 @@ special_characters = {
     u'ç': ur'\c{c}',
     u'ó': ur"\'{o}",
     u'ø': ur"\o",
+    u'©': ur'\copyright',
+    u'“': u'"',
+    u'”': u'"',
+    u'ℓ': u'l',
 }
 
-def clean_lines(path):
+def lines(path):
     with codecs.open(path, encoding='utf-8') as f:
         for line in f:
-            l = clean_line(line)
-            if l is not None:
-                yield check_characters(l)
+            yield line
 
-def clean_line(line):
-    m = re.search(r'^\s+(\w+) = ', line)
+def clean(line):
+    m = re.search(r'^(?P<key>\w+) = (?P<value>.*)$', line)
     if not m:
         return line
-    elif m.group(1) in keep:
-        return line
 
-def check_characters(line):
-    return line
+    d = m.groupdict()
+    if d['key'] in keep:
+        return _fix_url(line)
+    else:
+        return ''
+
+def _fix_url(line):
+    return re.sub(r'\\_', '_', line)
+
+def main(path):
+    for l in lines(path):
+        sys.stdout.write(clean(l))
+        # for c in l:
+        #     sys.stdout.write(
+        #         special_characters.get(c, c)
+        #     )
 
 if __name__ == '__main__':
-    in_path = sys.argv[1]
-    out_path = sys.argv[2]
-    with open(out_path, 'w') as f:
-        for l in clean_lines(in_path):
-            for c in l:
-                try:
-                    f.write(c)
-                except:
-                    if c in special_characters:
-                        f.write(special_characters[c])
-                    else:
-                        print u'_%s_' % c, ord(c)
+    main(path=sys.argv[1])
