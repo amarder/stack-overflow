@@ -10,7 +10,7 @@ paper/clean.bib: paper/clean-references.py paper/raw.bib
 	python paper/clean-references.py paper/raw.bib > paper/clean.bib
 
 paper/stack-overflow.pdf: paper/stack-overflow.md paper/clean.bib
-	pandoc paper/stack-overflow.md -V geometry:margin=1in -V linestretch:1 --biblio paper/clean.bib --filter pandoc-citeproc -o paper/stack-overflow.pdf
+	pandoc paper/stack-overflow.md -V geometry:margin=1in -V linestretch:2 --biblio paper/clean.bib --filter pandoc-citeproc -o paper/stack-overflow.pdf
 
 wc: paper/stack-overflow.pdf
 	pdftotext paper/stack-overflow.pdf - | wc -w

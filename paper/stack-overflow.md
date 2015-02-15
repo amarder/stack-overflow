@@ -3,7 +3,7 @@ title: Stack Overflow and Gamification - Something from Nothing?
 author: Andrew Marder
 date: \today
 nocite: |
-  @Antin2011
+  @Antin2011, @MSRChallenge2015
 ---
 
 # Introduction
