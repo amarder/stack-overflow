@@ -1,4 +1,9 @@
-my_db.sqlite: munge/xml2sql.py munge/keep.json $(DATA_FOLDER)/*.xml
+DATA_FOLDER = raw
+METADATA = munge/keep.json
+TABLES = $(shell python munge/tables.py $(METADATA))
+
+my_db.sqlite: munge/xml2sql.py munge/keep.json
+	cd $(DATA_FOLDER); make all
 	python munge/xml2sql.py $(DATA_FOLDER) my_db.sqlite
 
 figures: my_db.sqlite
