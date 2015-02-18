@@ -4,8 +4,7 @@ library(ggplot2)
 
 set.seed(1)
 
-WINDOW <- 60*24*30
-RESOLUTION <- 60*24
+WINDOW <- 30
 
 get_data <- function(badge) {
     db <- src_sqlite('my_db.sqlite', create=FALSE)
@@ -15,27 +14,26 @@ get_data <- function(badge) {
     y <- badges %>%
         filter(Name == badge) %>%
         select(UserId, Date) %>%
-        collect()
-    t <- ymd_hms(y$Date)
-    keep <- (t - min(t) >= WINDOW * 60) & (max(t) - t >= WINDOW * 60)
-    y <- y[keep, ]
+        collect() %>%
+        mutate(t=as.Date(substr(Date, 1, 10))) %>%
+        filter((min(t) + WINDOW <= t) & (t <= max(t) - WINDOW))
+
     print(paste(badge, ':', nrow(y)))
 
-    df <- inner_join(actions, y, by='UserId', copy=TRUE) %>% collect()
-
-    seconds <- ymd_hms(df$CreationDate) - ymd_hms(df$Date)
-    df$minute <- as.numeric(seconds) / 60
-
-    df$minute <- ceiling(df$minute / RESOLUTION) * RESOLUTION
-
     f <- function(block) {
-        counts <- block %>% group_by(minute) %>% summarise(count=n())
-        expanded <- full_join(data.frame(minute=seq(-WINDOW, WINDOW, RESOLUTION)), counts, by='minute')
+        counts <- block %>%
+            group_by(k) %>%
+            summarise(count=n())
+        expanded <- full_join(data.frame(k=-WINDOW:WINDOW), counts, by='k')
         expanded$count[is.na(expanded$count)] <- 0
         return(expanded)
     }
-    counts <- df %>%
-        filter(-WINDOW <= minute & minute <= WINDOW) %>%
+
+    counts <- inner_join(actions, y, by='UserId', copy=TRUE) %>%
+        collect() %>%
+        mutate(s=as.Date(substr(CreationDate, 1, 10))) %>%
+        mutate(k=as.integer(s - t)) %>%
+        filter(-WINDOW <= k & k <= WINDOW) %>%
         group_by(UserId, PostTypeId) %>%
         do(f(.))
 
@@ -53,15 +51,15 @@ get_coefficients <- function(counts) {
     data_path <- 'temp.csv'
     est_path <- 'beta.csv'
 
-    shift <- min(counts$minute)
-    counts$minute <- counts$minute - shift
+    shift <- min(counts$k)
+    counts$k <- counts$k - shift
     write.csv(counts, data_path, row.names=FALSE)
     cmd <- paste('stata-mp -b do figures/my_poisson.do', data_path, est_path)
     system(cmd)
 
     my.coefficients <- read.csv(est_path, skip=1)
-    names(my.coefficients) <- c('minute', 'estimate', 'low', 'high')
-    my.coefficients$minute <- as.numeric(gsub('[^-0-9]', '', my.coefficients$minute)) + shift
+    names(my.coefficients) <- c('k', 'estimate', 'low', 'high')
+    my.coefficients$k <- as.numeric(gsub('[^-0-9]', '', my.coefficients$k)) + shift
 
     cleanup <- paste('rm', data_path, est_path, 'my_poisson.log')
     system(cleanup)
@@ -81,8 +79,8 @@ combined_coefficients <- function(tags) {
 
 my_graph <- function(coefficients) {
     g <- (
-        ggplot(coefficients, aes(x=minute/60/24, y=estimate, group=minute>0)) +
-        geom_ribbon(aes(x=minute/60/24, ymin=low, ymax=high), alpha=0.25) +
+        ggplot(coefficients, aes(x=k, y=estimate, group=k>0)) +
+        geom_ribbon(aes(x=k, ymin=low, ymax=high), alpha=0.25) +
         geom_line() +
         theme_bw() +
         xlab(paste('Days since receiving badge')) +
@@ -110,16 +108,9 @@ main <- function() {
     question_graph()
 }
 
-badges <- list(
-    editing=c("Strunk & White", "Archaeologist", "Copy Editor"),
-    questions=c("Inquisitive", "Curious")
-    )
-
-df <- get_data2(badges$editing)
-
 disaggregated_graph <- function(data) {
     g <- (
-        ggplot(data, aes(x=minute/60/24, y=log(1 + count), group=UserId)) +
+        ggplot(data, aes(x=k, y=log(1 + count), group=UserId)) +
         geom_line(alpha=0.1) +
         theme_bw() +
         xlab(paste('Days since receiving badge')) +
@@ -129,5 +120,17 @@ disaggregated_graph <- function(data) {
         )
     return(g)
 }
-g <- disaggregated_graph(df)
-print(g)
+
+debug <- function() {
+    badges <- list(
+        editing=c("Strunk & White", "Archaeologist", "Copy Editor"),
+        questions=c("Inquisitive", "Curious")
+        )
+
+    df <- get_data2(badges$editing)
+
+    g <- disaggregated_graph(df)
+    print(g)
+}
+
+main()
