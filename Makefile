@@ -2,13 +2,13 @@ DATA_FOLDER = raw
 METADATA = munge/keep.json
 TABLES = $(shell python munge/tables.py $(METADATA))
 
-my_db.sqlite: munge/xml2sql.py munge/keep.json
+my_db.sqlite: munge/xml2sql.py munge/keep.json munge/event-study.R
 	cd $(DATA_FOLDER); make all
 	python munge/xml2sql.py $(DATA_FOLDER) my_db.sqlite
+	cd munge; python badges.py
+	R -e "source('munge/event-study.R')"
 
-figures: my_db.sqlite
-
-figures/event-study.pdf: figures/event-study.R my_db.sqlite
+figures/editing.pdf: figures/event-study.R my_db.sqlite
 	Rscript figures/event-study.R
 
 paper/clean.bib: paper/clean-references.py paper/raw.bib
