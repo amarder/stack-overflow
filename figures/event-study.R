@@ -39,6 +39,12 @@ get_data <- function(badge) {
 
     counts$PostTypeId <- factor(counts$PostTypeId, levels=1:3, labels=c('Question', 'Answer', 'Edit'))
     counts$badge <- badge
+
+    ## Add in weekday
+    y$wday <- as.integer(y$t) %% 7
+    counts <- left_join(counts, y %>% select(UserId, wday), by='UserId')
+    counts$wday <- (counts$wday + counts$k) %% 7
+
     return(counts)
 }
 
