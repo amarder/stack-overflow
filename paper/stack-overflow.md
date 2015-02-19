@@ -1,5 +1,6 @@
 ---
-title: Stack Overflow and Gamification - Something from Nothing?
+title: Stack Overflow badges and user behavior
+subtitle: An econometric perspective
 author: Andrew Marder
 date: \today
 nocite: |
@@ -8,18 +9,21 @@ nocite: |
 
 # Introduction
 
-"Stack Exchange is a network of 130+ Q&A communities including Stack Overflow, the preeminent site for programmers to find, ask, and answer questions about software development...Stack Overflow Careers connects Stack Overflow users with employers." On January 20, @Spoelsky2015 announced that Stack Exchange had raised $40 million in venture capital funding. Stack Exchange gives users who ask questions access to expert technical help for free. Users who answer questions build their reputation for technical expertise, and use that reputation to find better jobs.
+Stack Overflow is a question and answer community designed for programmers. Created in 2008, the knowledge organized by Stack Overflow has become a valuable resource for software developers. On January 20, @Spoelsky2015 announced that Stack Exchange had raised $40 million in venture capital funding. Stack Exchange gives users who ask questions access to expert technical help for free. Users who answer questions build their reputation for technical expertise, and use that reputation to find better jobs.
 
-Although Stack Overflow's creation was strongly rooted in computer science, the social sciences will play a large role as the platform matures. There are a number of big picture questions to consider. How should Stack Overflow design its platform to maximize profits? Is the firm's profit-maximizing strategy efficient, does it maximize total surplus? How equitable is the profit-maximizing strategy? Stack Overflow creates value by improving job matches, how much of that value is captured by the platform, employers, and employees? What motivates users to contribute to Stack Overflow, what do user preferences look like? How important are self-interested motives versus pro-social motives? What combination of reputation rules and badge awards maximize the quantity and quality of contributions on the site?
+Although Stack Overflow's creation was strongly rooted in computer science, the social sciences will play a large role as the platform matures. There are a number of big picture questions to consider:
+
+* How should Stack Overflow design its platform to maximize profits?
+* Is the firm's profit-maximizing strategy efficient? Does it maximize total surplus?
+* How equitable is the profit-maximizing strategy? Stack Overflow creates value by improving job matches, how much of that value is captured by the platform, employers, and employees?
+* What motivates users to contribute to Stack Overflow? What do user preferences look like? How important are self-interested motives versus pro-social motives?
+* What combination of reputation rules and badge awards maximize the quantity and quality of user contributions?
 
 This paper takes a first step along the path of applying econometric analysis to publicly available Stack Overflow data. Specifically, I study how users behave around the time they are awarded badges. By taking a closer look at user actions we start to get an idea of how badges motivate user contributions.
 
 # Rules of the game
 
-@Deterding2011 define "_gamification_ as the use of game design
-elements in non-game contexts."
-[Stack Overflow](http://stackoverflow.com/) is a question and answer
-website designed for programmers that employs a few game elements:
+@Deterding2011 define "_gamification_ as the use of game design elements in non-game contexts." Stack Overflow is a question and answer website designed for programmers that employs a few game elements:
 
 1. A user earns reputation points when another user votes on her posts
    (5 points when a question is voted up, 10 points when an answer is
@@ -28,13 +32,13 @@ website designed for programmers that employs a few game elements:
 
 2. As a user earns reputation points she unlocks privileges on the
    site. For instance, a user must have at least 15 reputation points
-   to vote up a question or answer. A list of all privileges is
-   available [here](http://stackoverflow.com/help/privileges).
+   to vote up a question or answer. A list of privileges is
+   available at http://stackoverflow.com/help/privileges.
 
 3. Users are awarded badges for special achievements. One receives the
-   "Informed" badge by reading the entire
-   [tour page](http://stackoverflow.com/tour). A list of badges is
-   available [here](http://stackoverflow.com/help/badges).
+   "Informed" badge by reading the
+   tour page http://stackoverflow.com/tour. A list of badges is
+   available at http://stackoverflow.com/help/badges.
 
 @Grant2013 present empirical evidence that three of the
 badges awarded for various editing accomplishments are effective in
@@ -44,7 +48,7 @@ badge. This paper builds on their findings by:
 
 1. Looking at the impact of badges on all types of user activity (posting questions, posting answers, and editing posts).
 
-3. Comparing the impact of different badges. Looking at three different badges, each aimed at promoting a different type of user activity.
+3. Comparing the impact of different badges. In addition to the three editing badges, this paper also looks at two badges awarded for asking questions.
 
 # How users behave when earning badges
 
@@ -78,21 +82,27 @@ Archaelogist Edited 100 posts that were inactive for 6 months
 Curious Asked a well-received question on 5 separate days, and maintained a positive question record
 Inquisitive Asked a well-received question on 30 separate days, and maintained a positive question record
 
-The 95% confidence interval is tight around the line, standard errors were calculated using the delta method [@Williams2012]. Figure \ref{edit} confirms the findings of @Grant2013, editing increases gradually before receiving the badge with a large jump in activity in the day immediately before earning the badge. We also see that editing drops quickly immediately after receiving the badge and gradually declines over time. It's interesting to see how few questions were asked by the recipients of the editing badges in the two months around receiving the badge, and to see that the rate of answering questions tends to be constant throught the two month window.
+"Strunk & White : 6923"
+"Archaeologist : 622"  
+"Copy Editor : 1207"   
+"Inquisitive : 160"    
+"Curious : 1463"
+
+The 95% confidence interval is tight around the line, standard errors were calculated using the delta method [@Williams2012]. Figure \ref{edit} confirms the findings of @Grant2013, editing increases gradually before receiving the badge with a large jump in activity in the day immediately before earning the badge. We also see that editing drops quickly after receiving the badge and gradually declines over time. It's interesting to see how few questions were asked by the recipients of the editing badges in the two months around receiving the badge, and to see that the rate of answering questions tends to be constant throught the two month window.
 
 ![\label{edit} User activity over time - badges for edits](figures/editing.pdf)
 
 Figure \ref{questioning} plots user activity around receiving badges for asking questions. User activity around question badges differs in interesting ways to badges for edits:
 
-1. All types of actions tend to increase in the thirty days leading up to earning the badge. In Figure \ref{edit}, only edits increased. In Figure \ref{questioning}, the number of questions, answers, and edits posted all increased.
+1. All types of actions tend to increase in the thirty days leading up to earning the badge. In Figure \ref{edit}, only edits increase. In Figure \ref{questioning}, the number of questions, answers, and edits posted all increased.
 
-2. User activity stops almost immediately after receiving the badge. This makes me think something might be wrong with the data. It's too stark.
+2. User activity stops almost immediately after receiving the badge.
 
 ![\label{questioning} User activity over time - badges for questions](figures/questions.pdf)
 
 # Conclusion
 
-In line with Spence's [-@Spence1973] model of job market signaling, Stack Overflow provides a platform for job searchers to signal their ability by answering difficult technical questions publicly. In the process, job searchers contribute to the provision of a valuable public good, combating the tragedy of the commons [@Hardin1968].
+In line with Spence's [-@Spence1973] model of job market signaling, Stack Overflow provides a platform for job searchers to signal their ability by answering difficult technical questions publicly. In the process, job searchers contribute to the provision of a valuable public good.
 
 When interpreting the empirical results of this paper, please consider Holland and Rubin's motto "no causation without manipulation" [@Holland1986]. There is no manipulation of the explanatory variable in this study, consequently we have not identified the causal effect of badges. To estimate the causal impact of badges on user activity we need to find a source of exogenous variation [@Miller2013].
 
