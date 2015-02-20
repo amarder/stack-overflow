@@ -9,36 +9,20 @@ nocite: |
 
 # Introduction
 
-Stack Overflow is a question and answer community designed for programmers. Created in 2008, the knowledge organized by Stack Overflow has become a valuable resource for software developers. On January 20, @Spoelsky2015 announced that Stack Exchange had raised $40 million in venture capital funding. Stack Exchange gives users who ask questions access to expert technical help for free. Users who answer questions build their reputation for technical expertise, and use that reputation to find better jobs.
+Stack Overflow is a question and answer community designed for programmers. It is the largest of 130 communities in the Stack Exchange network. Created in 2008, the knowledge organized by Stack Overflow has become a valuable resource for software developers. On January 20, @Spoelsky2015 announced that Stack Exchange had raised $40 million in venture capital funding. Stack Exchange gives users who ask questions access to expert technical help, users who answer questions build their reputation for technical expertise and use that reputation to find better jobs.
 
-Although Stack Overflow's creation was strongly rooted in computer science, the social sciences will play a large role as the platform matures. There are a number of big picture questions to consider:
+Although Stack Overflow's creation was rooted in computer science, the social sciences will provide important insights as the platform matures. There are a number of big picture questions to consider. How should Stack Overflow design its platform to maximize profits? Is the firm's profit-maximizing strategy efficient - does it maximize total surplus? How equitable is the profit-maximizing strategy - Stack Overflow creates value by improving job matches, how much of that value is captured by the platform, employers, and employees? What motivates users to contribute to Stack Overflow - how important are self-interested motives versus pro-social motives? What combination of reputation rules and badge awards maximize the quantity and quality of user contributions?
 
-* How should Stack Overflow design its platform to maximize profits?
-* Is the firm's profit-maximizing strategy efficient? Does it maximize total surplus?
-* How equitable is the profit-maximizing strategy? Stack Overflow creates value by improving job matches, how much of that value is captured by the platform, employers, and employees?
-* What motivates users to contribute to Stack Overflow? What do user preferences look like? How important are self-interested motives versus pro-social motives?
-* What combination of reputation rules and badge awards maximize the quantity and quality of user contributions?
-
-This paper takes a first step along the path of applying econometric analysis to publicly available Stack Overflow data. Specifically, I study how users behave around the time they are awarded badges. By taking a closer look at user actions we start to get an idea of how badges motivate user contributions.
+This paper takes a first step along the path of applying econometric analysis to publicly available Stack Overflow data. Specifically, I study how users behave around the time they are awarded badges. Taking a closer look at user actions, we find some badges are effective at motivating user contributions while others are not.
 
 # Rules of the game
 
-@Deterding2011 define "_gamification_ as the use of game design elements in non-game contexts." Stack Overflow is a question and answer website designed for programmers that employs a few game elements:
+@Deterding2011 define "_gamification_ as the use of game design elements in non-game contexts." Stack Overflow gamifies the process of asking and answering questions as follows. A user earns reputation points when another user votes on her posts (5 points when a question is voted up, 10 points when an answer is voted up, 15 points when an answer is accepted, and 2 points when an edit is approved). As a user earns reputation points she unlocks privileges on the site. For instance, a user must have at least 15 reputation points to vote up a question or answer.[^privileges] Users are awarded badges for special achievements. One receives the _Informed_ badge by reading the tour page.[^tour-badge]
 
-1. A user earns reputation points when another user votes on her posts
-   (5 points when a question is voted up, 10 points when an answer is
-   voted up, 15 points when an answer is accepted, and 2 points when
-   an edit is approved).
+[^privileges]: A full list of privileges and necessary reputation points is available at [http://stackoverflow.com/help/privileges](http://stackoverflow.com/help/privileges).
+[^tour-badge]: The Stack Overflow tour can be found at [http://stackoverflow.com/tour](http://stackoverflow.com/tour), and all badges are listed on [http://stackoverflow.com/help/badges](http://stackoverflow.com/help/badges).
 
-2. As a user earns reputation points she unlocks privileges on the
-   site. For instance, a user must have at least 15 reputation points
-   to vote up a question or answer. A list of privileges is
-   available at http://stackoverflow.com/help/privileges.
-
-3. Users are awarded badges for special achievements. One receives the
-   "Informed" badge by reading the
-   tour page http://stackoverflow.com/tour. A list of badges is
-   available at http://stackoverflow.com/help/badges.
+# How users behave when earning badges
 
 @Grant2013 present empirical evidence that three of the
 badges awarded for various editing accomplishments are effective in
@@ -48,9 +32,7 @@ badge. This paper builds on their findings by:
 
 1. Looking at the impact of badges on all types of user activity (posting questions, posting answers, and editing posts).
 
-3. Comparing the impact of different badges. In addition to the three editing badges, this paper also looks at two badges awarded for asking questions.
-
-# How users behave when earning badges
+2. Comparing the impact of different badges. In addition to the three editing badges, this paper also looks at two badges awarded for asking questions.
 
 @Grant2013 find that users who receive a badge for editing make more edits in the two-month window before receiving the badge compared to the two-month window after receiving the badge. I extend their work by exploring, on average, how many questions, answers, and edits a user posts around the time of receiving a badge. Let $y_{it}$ be the number of edits user $i$ makes on day $t$. Following the approach of @Jacobson1993 define the dummy variable
 
