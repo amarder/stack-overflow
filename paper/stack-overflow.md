@@ -58,18 +58,10 @@ Table: Badges of interest
 
 @Grant2013 find that users who receive a badge for editing make more edits in the two-month window before receiving the badge compared to the two-month window after receiving the badge. I extend their work by exploring, on average, how many questions, answers, and edits a user posts around the time of receiving a badge. Let $y_{it}$ be the number of edits user $i$ makes on day $t$. Following the approach of @Jacobson1993 define the dummy variable
 
-$$
-D_{it}^k =
-\begin{cases}
-1 & \text{if user $i$ earns the badge on day } t+k, \\
-0 & \text{otherwise.}
-\end{cases}
-$$
-
 I regress the number of edits user $i$ makes on day $t$ on a user fixed effect $\alpha_i$ and a set of dummy variables indicating whether the user received the badge of interest on day $t+k$
 
 $$
-\log(1 + y_{it}) = \alpha_i + \sum_{k=-29}^{30} D_{it}^k \delta_k + \epsilon_{it}.
+\log(1 + y_{it}) = \alpha_i + \sum_{k=-29}^{30} \1 \{ t = t_i^* + k \} \delta_k + \sum_{j=1}^6 \1 \{ t \bmod 7 = j \} \gamma_j + \epsilon_{it}.
 $$
 
 The model parameters are estimated using an ordinary least squares regression, and standard errors are clustered at the user level.
@@ -77,7 +69,7 @@ The model parameters are estimated using an ordinary least squares regression, a
 Let $t_i^*$ denote the day user $i$ recieves the badge. Figure \ref{edit} plots the expected number of actions taken on the $k$'th day since receiving the badge
 
 $$
-f(k) = E \left[ \log(1 + y_{it}) \; | \; t=t^*_i + k \right].
+f(k) = \E \left[ \log(1 + y_{it}) \; | \; t=t^*_i + k \right].
 $$
 
 
