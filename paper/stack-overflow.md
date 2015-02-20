@@ -34,6 +34,28 @@ badge. This paper builds on their findings by:
 
 2. Comparing the impact of different badges. In addition to the three editing badges, this paper also looks at two badges awarded for asking questions.
 
+---------------------------------------------------------------------------------------
+Name           Description                                            Number awarded 
+-------------- --------------------------------------------------- --------------------
+Strunk & White Edited 80 posts                                            6,923        
+
+Copy Editor    Edited 500 posts                                           1,207        
+
+               (excluding own or deleted posts and tag edits)                          
+
+Archaeologist  Edited 100 posts that were inactive for 6 months            622         
+
+Curious        Asked a well-received question on 5 separate days,         1,463        
+
+               and maintained a positive question record                               
+
+Inquisitive    Asked a well-received question on 30 separate days,         160         
+
+               and maintained a positive question record                               
+---------------------------------------------------------------------------------------
+
+Table: Badges of interest
+
 @Grant2013 find that users who receive a badge for editing make more edits in the two-month window before receiving the badge compared to the two-month window after receiving the badge. I extend their work by exploring, on average, how many questions, answers, and edits a user posts around the time of receiving a badge. Let $y_{it}$ be the number of edits user $i$ makes on day $t$. Following the approach of @Jacobson1993 define the dummy variable
 
 $$
@@ -58,17 +80,6 @@ $$
 f(k) = E \left[ \log(1 + y_{it}) \; | \; t=t^*_i + k \right].
 $$
 
-Strunk & White Edited 80 posts
-Copy Editor Edited 500 posts (excluding own or deleted posts and tag edits)
-Archaelogist Edited 100 posts that were inactive for 6 months
-Curious Asked a well-received question on 5 separate days, and maintained a positive question record
-Inquisitive Asked a well-received question on 30 separate days, and maintained a positive question record
-
-"Strunk & White : 6923"
-"Archaeologist : 622"  
-"Copy Editor : 1207"   
-"Inquisitive : 160"    
-"Curious : 1463"
 
 The 95% confidence interval is tight around the line, standard errors were calculated using the delta method [@Williams2012]. Figure \ref{edit} confirms the findings of @Grant2013, editing increases gradually before receiving the badge with a large jump in activity in the day immediately before earning the badge. We also see that editing drops quickly after receiving the badge and gradually declines over time. It's interesting to see how few questions were asked by the recipients of the editing badges in the two months around receiving the badge, and to see that the rate of answering questions tends to be constant throught the two month window.
 
