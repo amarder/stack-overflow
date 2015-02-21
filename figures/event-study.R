@@ -2,8 +2,6 @@ library(dplyr)
 library(lubridate)
 library(ggplot2)
 
-set.seed(1)
-
 WINDOW <- 30
 
 get_data <- function(badge) {
@@ -90,53 +88,19 @@ my_graph <- function(coefficients) {
         geom_line() +
         theme_bw() +
         xlab(paste('Days since receiving badge')) +
-        ylab('Number of actions, log(1 + y)') +
-        facet_grid(PostTypeId ~ badge) +
+        ylab('User activity, log(1 + y)') +
+        facet_grid(badge2 ~ PostTypeId) +
         scale_x_continuous(breaks=seq(-30, 30, 15))
         )
     return(g)
-}
-
-edit_graph <- function() {
-    long <- combined_coefficients(c("Strunk & White", "Archaeologist", "Copy Editor"))
-    g <- my_graph(long)
-    ggsave('figures/editing.pdf', g, height=5, width=9)
-}
-
-question_graph <- function() {
-    long <- combined_coefficients(c("Inquisitive", "Curious"))
-    g <- my_graph(long)
-    ggsave('figures/questions.pdf', g, height=5, width=9)
 }
 
 main <- function() {
-    edit_graph()
-    question_graph()
-}
-
-disaggregated_graph <- function(data) {
-    g <- (
-        ggplot(data, aes(x=k, y=log(1 + count), group=UserId)) +
-        geom_line(alpha=0.1) +
-        theme_bw() +
-        xlab(paste('Days since receiving badge')) +
-        ylab('Number of actions, log(1 + y)') +
-        facet_grid(PostTypeId ~ badge) +
-        scale_x_continuous(breaks=seq(-30, 30, 15))
-        )
-    return(g)
-}
-
-debug <- function() {
-    badges <- list(
-        editing=c("Strunk & White", "Archaeologist", "Copy Editor"),
-        questions=c("Inquisitive", "Curious")
-        )
-
-    df <- get_data2(badges$editing)
-
-    g <- disaggregated_graph(df)
-    print(g)
+    badges <- c("Strunk & White", "Copy Editor", "Archaeologist", "Curious", "Inquisitive")
+    long <- combined_coefficients(badges)
+    long$badge2 <- factor(match(long$badge, badges), levels=1:length(badges), labels=badges, ordered=TRUE)
+    g <- my_graph(long)
+    ggsave('figures/badges.pdf', g, height=8, width=9)
 }
 
 main()
