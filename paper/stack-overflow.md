@@ -60,27 +60,7 @@ Figure \ref{questioning} plots user activity around receiving badges for asking 
 
 \clearpage
 
----------------------------------------------------------------------------------------
-Name           Description                                            Number awarded 
--------------- --------------------------------------------------- --------------------
-Strunk & White Edited 80 posts                                            6,923        
-
-Copy Editor    Edited 500 posts                                           1,207        
-
-               (excluding own or deleted posts and tag edits)                          
-
-Archaeologist  Edited 100 posts that were inactive for 6 months            622         
-
-Curious        Asked a well-received question on 5 separate days,         1,463        
-
-               and maintained a positive question record                               
-
-Inquisitive    Asked a well-received question on 30 separate days,         160         
-
-               and maintained a positive question record                               
----------------------------------------------------------------------------------------
-
-Table: Badges of interest
+\input{paper/table.tex}
 
 ![\label{fig:badges} User activity over time](figures/badges.pdf)
 

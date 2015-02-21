@@ -82,15 +82,18 @@ combined_coefficients <- function(tags) {
 }
 
 my_graph <- function(coefficients) {
+    ylabels <- 2^(0:4) - 1
+    ybreaks <- log(1 + ylabels)
     g <- (
         ggplot(coefficients, aes(x=k, y=estimate, group=k>0)) +
         geom_ribbon(aes(x=k, ymin=low, ymax=high), alpha=0.25) +
         geom_line() +
         theme_bw() +
-        xlab(paste('Days since receiving badge')) +
-        ylab('User activity, log(1 + y)') +
+        xlab('Days since receiving badge') +
+        ylab('Number of actions') +
         facet_grid(badge2 ~ PostTypeId) +
-        scale_x_continuous(breaks=seq(-30, 30, 15))
+        scale_x_continuous(breaks=seq(-30, 30, 15)) +
+        scale_y_continuous(breaks=ybreaks, labels=ylabels)
         )
     return(g)
 }
