@@ -68,10 +68,10 @@ Figure \ref{questioning} plots user activity around receiving badges for asking 
 
 # Conclusion
 
-In line with Spence's [-@Spence1973] model of job market signaling, Stack Overflow provides a platform for job searchers to signal their ability by answering difficult technical questions publicly. In the process, job searchers contribute to the provision of a valuable public good.
+Stack Overflow provides a platform for job searchers to signal their ability by answering difficult technical questions publicly. Unlike Spence's [-@Spence1973] model of job market signaling, Stack Overflow enables job searchers to signal their ability in the form of a valuable public good.
 
 When interpreting the empirical results of this paper, please consider Holland and Rubin's motto "no causation without manipulation" [@Holland1986]. There is no manipulation of the explanatory variable in this study, consequently we have not identified the causal effect of badges. To estimate the causal impact of badges on user activity we need to find a source of exogenous variation [@Miller2013].
 
-This paper confirms the empirical observation of @Grant2013, on average users who receive a badge for editing make more edits in the 30 days prior to receiving the badge compared to the 30 days after receiving the badge. In addition, we show that the average number of questions and answers posted do not change around the receipt of an editing badge. Finally, we show that users who received badges for asking questions behaved differently. In particular, we found that the number of answers and edits posted followed a similar time trend as the number of questions asked. This suggests there may be an interesting spillover effect, encouraging users to ask more questions may have a secondary effect of encouraging general activity on the site.
+This paper confirms the empirical observation of @Grant2013, on average users who receive a badge for editing make more edits in the 30 days prior to receiving the badge compared to the 30 days after receiving the badge. In addition, we show that the average number of questions and answers posted do not change around the receipt of an editing badge. Finally, we show that users who received badges for asking questions behaved differently. In particular, we found that
 
 # References
