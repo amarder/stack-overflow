@@ -24,35 +24,26 @@ This paper takes a first step along the path of applying econometric analysis to
 
 # How users behave when earning badges
 
-@Grant2013 present empirical evidence that three of the
-badges awarded for various editing accomplishments are effective in
-encouraging users to make more edits in the two months preceding
-receipt of the badge compared to the two months after receiving the
-badge. This paper builds on their findings by:
+@Grant2013 present empirical evidence that three badges awarded for editing encourage recipients to make more edits in the two months preceding receipt of the badge compared to the two months after receiving the badge. This paper extends their findings by:
 
-1. Looking at the impact of badges on all types of user activity (posting questions, posting answers, and editing posts).
+1. examining all types of user activity (posting questions, posting answers, and editing posts), and
+2. comparing the impact of different badges. In addition to the three editing badges, this paper also looks at two badges awarded for asking questions.
 
-2. Comparing the impact of different badges. In addition to the three editing badges, this paper also looks at two badges awarded for asking questions.
-
-@Grant2013 find that users who receive a badge for editing make more edits in the two-month window before receiving the badge compared to the two-month window after receiving the badge. I extend their work by exploring, on average, how many questions, answers, and edits a user posts around the time of receiving a badge. Let $y_{it}$ be the number of edits user $i$ makes on day $t$. Following the approach of @Jacobson1993 define the dummy variable
-
-I regress the number of edits user $i$ makes on day $t$ on a user fixed effect $\alpha_i$ and a set of dummy variables indicating whether the user received the badge of interest on day $t+k$
+Let $y_{it}$ be the number of edits user $i$ makes on day $t$, and $t_i^*$ denote the day user $i$ recieves the badge of interest. Following the approach of @Jacobson1993, I regress the number of edits user $i$ makes on day $t$ on a user fixed effect $\alpha_i$, a set of dummy variables indicating whether the user received the badge on day $t-k$, while controlling for day of the week effects $\gamma_j$
 
 $$
 \log(1 + y_{it}) = \alpha_i + \sum_{k=-29}^{30} \1 \{ t = t_i^* + k \} \delta_k + \sum_{j=1}^6 \1 \{ t \bmod 7 = j \} \gamma_j + \epsilon_{it}.
 $$
 
-The model parameters are estimated using an ordinary least squares regression, and standard errors are clustered at the user level.
-
-Let $t_i^*$ denote the day user $i$ recieves the badge. Figure \ref{edit} plots the expected number of actions taken on the $k$'th day since receiving the badge
+The model parameters are estimated using an ordinary least squares regression, and standard errors are clustered at the user level. Figure \ref{fig:badges} plots the expected number of actions taken on the $k$'th day since receiving the badge
 
 $$
 f(k) = \E \left[ \log(1 + y_{it}) \; | \; t=t^*_i + k \right].
 $$
 
-The 95% confidence interval is tight around the line, standard errors were calculated using the delta method [@Williams2012]. Figure \ref{edit} confirms the findings of @Grant2013, editing increases gradually before receiving the badge with a large jump in activity in the day immediately before earning the badge. We also see that editing drops quickly after receiving the badge and gradually declines over time. It's interesting to see how few questions were asked by the recipients of the editing badges in the two months around receiving the badge, and to see that the rate of answering questions tends to be constant throught the two month window.
+The 95% confidence interval is tight around the linear prediction, standard errors were calculated using the delta method [@Williams2012]. Figure \ref{fig:badges} confirms the findings of @Grant2013. Editing increases gradually before receiving a badge for editing, with a large jump in activity on the award day. We also see that editing drops quickly after receiving the badge and gradually declines over time. It's interesting to see how few questions were asked by the recipients of the editing badges in the two months around receiving the badge, and to see that the rate of answering questions tends to be constant throught the two month window.
 
-Figure \ref{questioning} plots user activity around receiving badges for asking questions. User activity around question badges differs in interesting ways to badges for edits:
+Figure \ref{fig:badges} also plots user activity around receiving badges for asking questions. User activity around question badges differs in interesting ways to badges for edits:
 
 1. All types of actions tend to increase in the thirty days leading up to earning the badge. In Figure \ref{edit}, only edits increase. In Figure \ref{questioning}, the number of questions, answers, and edits posted all increased.
 
