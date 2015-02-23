@@ -14,7 +14,7 @@ figures/editing.pdf: figures/event-study.R my_db.sqlite
 paper/clean.bib: paper/clean-references.py paper/raw.bib
 	python paper/clean-references.py paper/raw.bib > paper/clean.bib
 
-paper/stack-overflow.pdf: paper/stack-overflow.md paper/clean.bib
+paper/stack-overflow.pdf: paper/stack-overflow.md paper/clean.bib paper/table.tex
 	pandoc paper/stack-overflow.md --template=paper/template.tex -V geometry:margin=1in --biblio paper/clean.bib --filter pandoc-citeproc -o paper/stack-overflow.pdf
 
 wc: paper/stack-overflow.pdf
