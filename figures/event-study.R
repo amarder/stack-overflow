@@ -53,7 +53,11 @@ get_data <- function(badge, n=250) {
 }
 
 get_data2 <- function(badges) {
-    l <- lapply(badges, get_data)
+    l <- lapply(badges, function(x) {
+        df <- get_data(x)
+        df$badge <- x
+        return(df)
+    })
     return(do.call(bind_rows, l))
 }
 
@@ -77,17 +81,7 @@ get_coefficients <- function(counts) {
     return(my.coefficients)
 }
 
-combined_coefficients <- function(tags) {
-    l <- lapply(tags, function(x) {
-        df <- get_data(x)
-        coefficients <- df %>% group_by(PostTypeId) %>% do(get_coefficients(.))
-        coefficients$badge <- x
-        return(coefficients)
-    })
-    return(do.call(bind_rows, l))
-}
-
-my_graph <- function(coefficients) {
+plot_coefficients <- function(coefficients) {
     ylabels <- 2^(0:4) - 1
     ybreaks <- log(1 + ylabels)
     g <- (
@@ -97,18 +91,43 @@ my_graph <- function(coefficients) {
         theme_bw() +
         xlab('Days since receiving badge') +
         ylab('Number of actions') +
-        facet_grid(badge2 ~ PostTypeId) +
+        facet_grid(badge ~ PostTypeId) +
         scale_x_continuous(breaks=seq(-30, 30, 15)) +
         scale_y_continuous(breaks=ybreaks, labels=ylabels)
         )
     return(g)
 }
 
-main <- function() {
+plot_counts <- function(counts) {
+    ylabels <- 2^(0:4) - 1
+    ybreaks <- log(1 + ylabels)
+    g <- (
+        ggplot(counts, aes(x=k, y=log(1 + count), group=UserId)) +
+        geom_line(alpha=0.1) +
+        theme_bw() +
+        xlab('Days since receiving badge') +
+        ylab('Number of actions') +
+        facet_grid(badge ~ PostTypeId) +
+        scale_x_continuous(breaks=seq(-30, 30, 15)) +
+        scale_y_continuous(breaks=ybreaks, labels=ylabels)
+        )
+    return(g)
+}
+
+main <- function(debug=FALSE) {
+    # Set up data
     badges <- c("Strunk & White", "Copy Editor", "Archaeologist", "Curious", "Inquisitive")
-    long <- combined_coefficients(badges)
-    long$badge2 <- factor(match(long$badge, badges), levels=1:length(badges), labels=badges, ordered=TRUE)
-    g <- my_graph(long)
+    data <- get_data2(badges)
+    data$badge <- factor(match(data$badge, badges), levels=1:length(badges), labels=badges, ordered=TRUE)
+
+    if (debug) {
+        g <- plot_counts(data)
+    }
+    else {
+        coefficients <- data %>% group_by(badge, PostTypeId) %>% do(get_coefficients(.))
+        g <- plot_coefficients(coefficients)
+    }
+
     ggsave('figures/badges.pdf', g, height=8, width=9)
 }
 
