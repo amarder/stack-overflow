@@ -5,11 +5,11 @@ library(ggplot2)
 WINDOW <- 30
 set.seed(1)
 
-get_data <- function(badge, n=250) {
-    db <- src_sqlite('my_db.sqlite', create=FALSE)
-    badges <- tbl(db, 'badges_of_interest')
-    actions <- tbl(db, 'actions')
+db <- src_sqlite('my_db.sqlite', create=FALSE)
+badges <- tbl(db, 'badges_of_interest')
+actions <- tbl(db, 'actions')
 
+get_data <- function(badge, n=250) {
     y <- badges %>%
         filter(Name == badge) %>%
         select(UserId, Date) %>%
@@ -27,9 +27,16 @@ get_data <- function(badge, n=250) {
     f <- function(block) {
         counts <- block %>%
             group_by(k) %>%
-            summarise(count=n())
+            summarise(count=n(), t=min(t))
         expanded <- full_join(data.frame(k=-WINDOW:WINDOW), counts, by='k')
         expanded$count[is.na(expanded$count)] <- 0
+
+        low <- min(block$t)
+        high <- max(block$t)
+        stopifnot(low == high)
+        origin <- as.Date('1970-01-01')
+        expanded$t <- as.Date(low, origin=origin) + expanded$k
+
         return(expanded)
     }
 
@@ -52,13 +59,22 @@ get_data <- function(badge, n=250) {
     return(counts)
 }
 
-get_data2 <- function(badges) {
-    l <- lapply(badges, function(x) {
+get_data2 <- function(tags) {
+    l <- lapply(tags, function(x) {
         df <- get_data(x)
         df$badge <- x
         return(df)
     })
-    return(do.call(bind_rows, l))
+    result <- do.call(bind_rows, l)
+
+    # Make sure that all the dates are within the fence posts of all
+    # actions.
+    dates <- actions %>% summarise(start=min(CreationDate), stop=max(CreationDate)) %>% collect()
+    result$out_of_range <- result$t <= dates$start | dates$stop <= result$t
+    print(paste('Dropping', sum(result$out_of_range), 'observations out of range.'))
+    result <- result %>% filter(!out_of_range)
+
+    return(result)
 }
 
 get_coefficients <- function(counts) {
@@ -116,9 +132,9 @@ plot_counts <- function(counts) {
 
 main <- function(debug=FALSE) {
     # Set up data
-    badges <- c("Strunk & White", "Copy Editor", "Archaeologist", "Curious", "Inquisitive")
-    data <- get_data2(badges)
-    data$badge <- factor(match(data$badge, badges), levels=1:length(badges), labels=badges, ordered=TRUE)
+    tags <- c("Strunk & White", "Copy Editor", "Archaeologist", "Curious", "Inquisitive")
+    data <- get_data2(tags)
+    data$badge <- factor(match(data$badge, tags), levels=1:length(tags), labels=tags, ordered=TRUE)
 
     if (debug) {
         g <- plot_counts(data)
