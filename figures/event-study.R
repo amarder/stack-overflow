@@ -3,8 +3,9 @@ library(lubridate)
 library(ggplot2)
 
 WINDOW <- 30
+set.seed(1)
 
-get_data <- function(badge) {
+get_data <- function(badge, n=500) {
     db <- src_sqlite('my_db.sqlite', create=FALSE)
     badges <- tbl(db, 'badges_of_interest')
     actions <- tbl(db, 'actions')
@@ -13,10 +14,15 @@ get_data <- function(badge) {
         filter(Name == badge) %>%
         select(UserId, Date) %>%
         collect() %>%
-        mutate(t=as.Date(substr(Date, 1, 10))) %>%
-        filter((min(t) + WINDOW <= t) & (t <= max(t) - WINDOW))
+        mutate(s=ymd_hms(substr(Date, 1, 19))) %>%
+        filter(s > min(s)) %>%
+        mutate(t=as.Date(substr(Date, 1, 10)))
+    y$s <- NULL
 
     print(paste(badge, ':', nrow(y)))
+
+    # Random sample of n users.
+    y <- y %>% sample_n(n, replace=FALSE)
 
     f <- function(block) {
         counts <- block %>%
