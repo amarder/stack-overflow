@@ -5,7 +5,7 @@ library(ggplot2)
 WINDOW <- 30
 set.seed(1)
 
-get_data <- function(badge, n=500) {
+get_data <- function(badge, n=250) {
     db <- src_sqlite('my_db.sqlite', create=FALSE)
     badges <- tbl(db, 'badges_of_interest')
     actions <- tbl(db, 'actions')
