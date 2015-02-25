@@ -22,7 +22,7 @@ get_data <- function(badge, n=250) {
     print(paste(badge, ':', nrow(y)))
 
     # Random sample of n users.
-    y <- y %>% sample_n(n, replace=FALSE)
+    y <- y %>% sample_n(min(n, nrow(y)), replace=FALSE)
 
     f <- function(block) {
         counts <- block %>%
@@ -102,14 +102,18 @@ plot_coefficients <- function(coefficients) {
     ybreaks <- log(1 + ylabels)
     g <- (
         ggplot(coefficients, aes(x=k, y=estimate, group=k>0)) +
-        geom_ribbon(aes(x=k, ymin=low, ymax=high), alpha=0.25) +
-        geom_line() +
+        geom_ribbon(aes(x=k, ymin=low, ymax=high, fill='grey'), alpha=0.25) +
+        geom_line(aes(color='black')) +
+        scale_color_manual(values="#000000", labels="Linear prediction") +
+        scale_fill_manual(values=c('#555555', '#555555'), labels="95% Confidence interval") +
         theme_bw() +
         xlab('Days since receiving badge') +
         ylab('Number of actions') +
         facet_grid(badge ~ PostTypeId) +
         scale_x_continuous(breaks=seq(-30, 30, 15)) +
-        scale_y_continuous(breaks=ybreaks, labels=ylabels)
+        scale_y_continuous(breaks=ybreaks, labels=ylabels) +
+        theme(legend.direction="horizontal", legend.position="top", legend.box="horizontal") +
+        guides(fill=guide_legend(title=NULL), color=guide_legend(title=NULL))
         )
     return(g)
 }

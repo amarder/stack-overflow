@@ -24,10 +24,7 @@ This paper takes a first step along the path of applying econometric analysis to
 
 # How users behave when earning badges
 
-@Grant2013 present empirical evidence that three badges awarded for editing encourage recipients to make more edits in the two months preceding receipt of the badge compared to the two months after receiving the badge. This paper extends their findings by:
-
-1. examining all types of user activity (posting questions, posting answers, and editing posts), and
-2. comparing the impact of different badges. In addition to the three editing badges, this paper also looks at two badges awarded for asking questions.
+@Grant2013 present empirical evidence that three badges awarded for editing encourage recipients to make more edits in the two months preceding receipt of the badge compared to the two months after receiving the badge. This paper extends their findings by examining all types of user activity (posting questions, posting answers, and editing posts), and exploring the impact of two new badges awarded for asking questions. Table \ref{tab:badges} describes the five badges considered in this paper.
 
 Let $y_{it}$ be the number of edits user $i$ makes on day $t$, and $t_i^*$ denote the day user $i$ recieves the badge of interest. Following the approach of @Jacobson1993, I regress the number of edits user $i$ makes on day $t$ on a user fixed effect $\alpha_i$, a set of dummy variables indicating whether the user received the badge on day $t-k$, while controlling for day of the week effects $\gamma_j$
 
@@ -41,7 +38,7 @@ $$
 f(k) = \E \left[ \log(1 + y_{it}) \; | \; t=t^*_i + k \right].
 $$
 
-The 95% confidence interval is tight around the linear prediction, standard errors were calculated using the delta method [@Williams2012]. Figure \ref{fig:badges} confirms the findings of @Grant2013. Editing increases gradually before receiving a badge for editing, with a large jump in activity on the award day. We also see that editing drops quickly after receiving the badge and gradually declines over time. It's interesting to see how few questions were asked by the recipients of the editing badges in the two months around receiving the badge, and to see that the rate of answering questions tends to be constant throught the two month window.
+The predicted number of actions $\hat{f(k)}$ is presented in Figure \ref{fig:badges}. The 95% confidence interval is presented as a gray band around the tight around the linear prediction, standard errors were calculated using the delta method [@Williams2012]. Figure \ref{fig:badges} confirms the findings of @Grant2013. Editing increases gradually before receiving a badge for editing, with a large jump in activity on the award day. We also see that editing drops quickly after receiving the badge and gradually declines over time. It's interesting to see how few questions were asked by the recipients of the editing badges in the two months around receiving the badge, and to see that the rate of answering questions tends to be constant throught the two month window.
 
 Figure \ref{fig:badges} also plots user activity around receiving badges for asking questions. User activity around question badges differs in interesting ways to badges for edits:
 
