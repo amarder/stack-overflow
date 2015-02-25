@@ -8,14 +8,14 @@ my_db.sqlite: munge/xml2sql.py munge/keep.json munge/event-study.R
 	cd munge; python badges.py
 	R -e "source('munge/event-study.R')"
 
-figures/editing.pdf: figures/event-study.R my_db.sqlite
+figures/badges.pdf: figures/event-study.R my_db.sqlite figures/my_poisson.do
 	Rscript figures/event-study.R
 
 paper/clean.bib: paper/clean-references.py paper/raw.bib
 	python paper/clean-references.py paper/raw.bib > paper/clean.bib
 
 paper/stack-overflow.pdf: paper/stack-overflow.md paper/clean.bib paper/table.tex
-	pandoc paper/stack-overflow.md --template=paper/template.tex -V geometry:margin=1in --biblio paper/clean.bib --filter pandoc-citeproc -o paper/stack-overflow.pdf
+	pandoc paper/stack-overflow.md --template=paper/template.tex -V geometry:margin=1in -V linestretch=2 --biblio paper/clean.bib --filter pandoc-citeproc -o paper/stack-overflow.pdf
 
 wc: paper/stack-overflow.pdf
 	pdftotext paper/stack-overflow.pdf - | wc -w

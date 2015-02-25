@@ -1,20 +1,22 @@
 \begin{table}
-  \centering
-  \ra{1.2}
-  \begin{tabular}{@{}llcc@{}}
-\toprule
-    Name & Description & Number & Proportion dropped \\
-\midrule
-    Strunk \& White & Edited 80 posts & 7,073 & 0.00 \\
-    Copy Editor & Edited 500 posts & 1,288 & 0.04 \\
-                & (excluding own or deleted posts and tag edits) & & \\
-    Archaeologist & Edited 100 posts that were inactive for 6 months & 691 & 0.05 \\
-    Curious & Asked a well-received question on 5 separate days, & 138,264 & 0.86 \\
-            & and maintained a positive question record & & \\
-    Inquisitive & Asked a well-received question on 30 separate days, & 14,081 & 0.92 \\
-                & and maintained a positive question record & & \\
-\bottomrule
-  \end{tabular}
-  \caption{Badges of interest}
-  \label{tab:badges}
+  \begin{threeparttable}
+    % \ra{1.2}
+    \caption{Badges of interest}
+    \label{tab:badges}
+    \begin{tabular}{@{}llccc@{}}
+      \toprule
+      Name & Description & Awarded & Introduced & Dropped \\
+      \midrule
+      Strunk \& White & Edited 80 posts & 7,073 & 2008-09-15 & 0.00 \\
+      Copy Editor & Edited 500 posts & 1,288 & 2010-07-09 & 0.04 \\
+      Archaeologist & Edited 100 posts that were inactive for 6 months & 691 & 2011-08-15 & 0.05 \\
+      Curious & Asked a well-received question on 5 separate days & 138,264 & 2014-07-02 & 0.86 \\
+      Inquisitive & Asked a well-received question on 30 separate days & 14,081 & 2014-07-02 & 0.92 \\
+      Socratic & Asked a well-received question on 100 separate days & 1,240 & 2014-07-02 & 0.93 \\
+      \bottomrule
+    \end{tabular}
+    \begin{tablenotes}
+    \item The six badges considered in this paper were introduced to the Stack Overflow site at different times. The Strunk \& White badge was first awarded on September 15, 2008, while the three badges for asking questions were all introduced on July 2, 2014. Since the badges for asking questions were added to the site so recently many users who have been awarded these badges earned them for actions taken before the badge was introduced. For instance, 86\% of users who earned the Curious badge were awarded the badge for actions taken before July 2, 2014. I drop these users from the analysis as they have no incentive to change their behavior to earn the Curious badge.
+    \end{tablenotes}
+  \end{threeparttable}
 \end{table}

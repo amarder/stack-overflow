@@ -4,7 +4,7 @@ subtitle: An econometric perspective
 author: Andrew Marder
 date: \today
 nocite: |
-  @Antin2011, @MSRChallenge2015
+  @MSRChallenge2015
 ---
 
 # Introduction
@@ -24,7 +24,7 @@ This paper takes a first step along the path of applying econometric analysis to
 
 # How users behave when earning badges
 
-@Grant2013 present empirical evidence that three badges awarded for editing encourage recipients to make more edits in the two months preceding receipt of the badge compared to the two months after receiving the badge. This paper extends their findings by examining all types of user activity (posting questions, posting answers, and editing posts), and exploring the impact of two new badges awarded for asking questions. Table \ref{tab:badges} describes the five badges considered in this paper.
+@Grant2013 present empirical evidence that three badges awarded for editing encourage recipients to make more edits in the two months preceding receipt of the badge compared to the two months after receiving the badge. This paper extends their findings by examining all types of user activity (posting questions, posting answers, and editing posts), and exploring the impact of three new badges awarded for asking questions. Table \ref{tab:badges} describes the six badges considered in this paper.
 
 Let $y_{it}$ be the number of edits user $i$ makes on day $t$, and $t_i^*$ denote the day user $i$ recieves the badge of interest. Following the approach of @Jacobson1993, I regress the number of edits user $i$ makes on day $t$ on a user fixed effect $\alpha_i$, a set of dummy variables indicating whether the user received the badge on day $t-k$, while controlling for day of the week effects $\gamma_j$
 
@@ -38,21 +38,15 @@ $$
 f(k) = \E \left[ \log(1 + y_{it}) \; | \; t=t^*_i + k \right].
 $$
 
-The predicted number of actions $\hat{f(k)}$ is presented in Figure \ref{fig:badges}. The 95% confidence interval is depicted as a gray band around the linear prediction, standard errors were calculated using the delta method [@Williams2012]. Figure \ref{fig:badges} confirms the findings of @Grant2013. Editing increases gradually before receiving a badge for editing, with a large jump in activity on the award day. We also see that editing drops quickly after receiving the badge and gradually declines over time. It's interesting to see how few questions were asked by the recipients of the editing badges in the two months around receiving the badge, and to see that the rate of answering questions tends to be constant through the two month window.
+The predicted number of actions $\hat{f(k)}$ is presented in Figure \ref{fig:badges}. The 95% confidence interval is depicted as a gray band around the linear prediction, standard errors were calculated using the delta method [@Williams2012]. Figure \ref{fig:badges} confirms the findings of @Grant2013. Editing increases gradually before receiving a badge for editing, with a large jump in activity on the award day. We also see that editing drops quickly after receiving the badge and gradually declines over time. It's interesting to see how few questions were asked by the recipients of the editing badges in the two months around receiving the badge, and to see that the rate of answering questions has a very slight increase leading up to receiving the badge and a similarly slight decrease after receiving the badge.
 
-Figure \ref{fig:badges} also plots user activity around receiving badges for asking questions. User activity around question badges differs in interesting ways to badges for edits:
+The results for the Curious, Inquisitve, and Socratic badges are quite different. In general, recipients of these badges are not particularly active on the site. The average level of questions, answers, and edits made all hover around zero. The uptick in questions asked on the day before receiving the badge is mechanical. Many users who earn these badges ask a question the day before they earn the badge.
 
-1. All types of actions tend to increase in the thirty days leading up to earning the badge. In Figure \ref{edit}, only edits increase. In Figure \ref{questioning}, the number of questions, answers, and edits posted all increased.
-
-2. User activity stops almost immediately after receiving the badge.
-
-\clearpage
+By looking at a new set of badges we find that not all badges are created equal. The three badges for editing seem effective at changing user behavior around the time the badge is awarded. The three badges for questions do not appear effective at changing user behavior. This is not to say that the badges for asking questions are not useful to the Stack Overflow platform. @Antin2011 suggest five social psychological functions of badges. A badge awarded for asking good questions may be valuable as a social status symbol or a personal affirmation of past success. 
 
 \input{paper/table.tex}
 
 ![\label{fig:badges} User activity over time](figures/badges.pdf)
-
-\clearpage
 
 # Conclusion
 
@@ -60,6 +54,6 @@ Stack Overflow provides a platform for job searchers to signal their ability by 
 
 When interpreting the empirical results of this paper, please consider Holland and Rubin's motto "no causation without manipulation" [@Holland1986]. There is no manipulation of the explanatory variable in this study, consequently we have not identified the causal effect of badges. To estimate the causal impact of badges on user activity we need to find a source of exogenous variation [@Miller2013].
 
-This paper confirms the empirical observation of @Grant2013, on average users who receive a badge for editing make more edits in the 30 days prior to receiving the badge compared to the 30 days after receiving the badge. In addition, we show that the average number of questions and answers posted do not change around the receipt of an editing badge. Finally, we show that users who received badges for asking questions behaved differently. In particular, we found that
+This paper confirms the empirical observation of @Grant2013, on average users who receive a badge for editing make more edits in the 30 days prior to receiving the badge compared to the 30 days after receiving the badge. In addition, we show that the average number of questions and answers posted do not change around the receipt of an editing badge. Finally, we show that users who received badges for asking questions behaved differently. In particular, we found that users do not appear motivated to change their activity levels to earn badges for asking questions.
 
 # References
