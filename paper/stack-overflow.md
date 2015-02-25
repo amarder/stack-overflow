@@ -32,13 +32,13 @@ $$
 \log(1 + y_{it}) = \alpha_i + \sum_{k=-29}^{30} \1 \{ t = t_i^* + k \} \delta_k + \sum_{j=1}^6 \1 \{ t \bmod 7 = j \} \gamma_j + \epsilon_{it}.
 $$
 
-The model parameters are estimated using an ordinary least squares regression, and standard errors are clustered at the user level. Figure \ref{fig:badges} plots the expected number of actions taken on the $k$'th day since receiving the badge
+The model parameters are estimated using an ordinary least squares regression, and standard errors are clustered at the user level. Define $f(k)$ to be the expected number of actions taken on the $k$'th day since receiving the badge
 
 $$
 f(k) = \E \left[ \log(1 + y_{it}) \; | \; t=t^*_i + k \right].
 $$
 
-The predicted number of actions $\hat{f(k)}$ is presented in Figure \ref{fig:badges}. The 95% confidence interval is presented as a gray band around the tight around the linear prediction, standard errors were calculated using the delta method [@Williams2012]. Figure \ref{fig:badges} confirms the findings of @Grant2013. Editing increases gradually before receiving a badge for editing, with a large jump in activity on the award day. We also see that editing drops quickly after receiving the badge and gradually declines over time. It's interesting to see how few questions were asked by the recipients of the editing badges in the two months around receiving the badge, and to see that the rate of answering questions tends to be constant throught the two month window.
+The predicted number of actions $\hat{f(k)}$ is presented in Figure \ref{fig:badges}. The 95% confidence interval is depicted as a gray band around the linear prediction, standard errors were calculated using the delta method [@Williams2012]. Figure \ref{fig:badges} confirms the findings of @Grant2013. Editing increases gradually before receiving a badge for editing, with a large jump in activity on the award day. We also see that editing drops quickly after receiving the badge and gradually declines over time. It's interesting to see how few questions were asked by the recipients of the editing badges in the two months around receiving the badge, and to see that the rate of answering questions tends to be constant through the two month window.
 
 Figure \ref{fig:badges} also plots user activity around receiving badges for asking questions. User activity around question badges differs in interesting ways to badges for edits:
 
