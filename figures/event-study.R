@@ -136,7 +136,7 @@ plot_counts <- function(counts) {
 
 main <- function(debug=FALSE) {
     # Set up data
-    tags <- c("Strunk & White", "Copy Editor", "Archaeologist", "Curious", "Inquisitive")
+    tags <- c("Strunk & White", "Copy Editor", "Archaeologist", "Curious", "Inquisitive", "Socratic")
     data <- get_data2(tags)
     data$badge <- factor(match(data$badge, tags), levels=1:length(tags), labels=tags, ordered=TRUE)
 
