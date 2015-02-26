@@ -4,20 +4,18 @@ subtitle: An econometric perspective
 author: Andrew Marder
 date: \today
 nocite: |
-  @MSRChallenge2015
+  @Antin2011, @MSRChallenge2015, @se-dump
 ---
 
 # Introduction
 
-Stack Overflow is a question and answer community designed for programmers. It is the largest of 130 communities in the Stack Exchange network. Created in 2008, the knowledge organized by Stack Overflow has become a valuable resource for software developers. On January 20, @Spoelsky2015 announced that Stack Exchange had raised $40 million in venture capital funding. Stack Exchange gives users who ask questions access to expert technical help, users who answer questions build their reputation for technical expertise and use that reputation to find better jobs.
-
-Although Stack Overflow's creation was rooted in computer science, the social sciences will provide important insights as the platform matures. There are a number of big picture questions to consider. How should Stack Overflow design its platform to maximize profits? Is the firm's profit-maximizing strategy efficient - does it maximize total surplus? How equitable is the profit-maximizing strategy - Stack Overflow creates value by improving job matches, how much of that value is captured by the platform, employers, and employees? What motivates users to contribute to Stack Overflow - how important are self-interested motives versus pro-social motives? What combination of reputation rules and badge awards maximize the quantity and quality of user contributions?
+Stack Overflow is a question and answer community designed for programmers. It is the largest of 130 communities in the Stack Exchange network. Created in 2008, the knowledge organized by Stack Overflow has become a valuable resource for software developers. On January 20, @Spoelsky2015 announced that Stack Exchange had raised $40 million in venture capital funding. Stack Exchange gives users who ask questions access to expert technical help, while users who answer questions build their reputation for technical expertise and use that reputation to find better jobs.
 
 This paper takes a first step along the path of applying econometric analysis to publicly available Stack Overflow data. Specifically, I study how users behave around the time they are awarded badges. Taking a closer look at user actions, we find some badges are effective at motivating user contributions while others are not.
 
 # Rules of the game
 
-@Deterding2011 define "_gamification_ as the use of game design elements in non-game contexts." Stack Overflow gamifies the process of asking and answering questions as follows. A user earns reputation points when another user votes on her posts (5 points when a question is voted up, 10 points when an answer is voted up, 15 points when an answer is accepted, and 2 points when an edit is approved). As a user earns reputation points she unlocks privileges on the site. For instance, a user must have at least 15 reputation points to vote up a question or answer.[^privileges] Users are awarded badges for special achievements. One receives the _Informed_ badge by reading the tour page.[^tour-badge]
+@Deterding2011 define "_gamification_ as the use of game design elements in non-game contexts." Stack Overflow gamifies the process of asking and answering questions as follows. A user earns reputation points when another user votes on her posts (5 points when a question is voted up, 10 points when an answer is voted up, 15 points when an answer is accepted, and 2 points when an edit is approved). As a user earns reputation points she unlocks privileges on the site. For instance, a user must have at least 15 reputation points to vote up a question or answer.[^privileges] Users are awarded badges for special achievements. For example, one receives the _Informed_ badge by reading the tour page.[^tour-badge]
 
 [^privileges]: A full list of privileges and necessary reputation points is available at [http://stackoverflow.com/help/privileges](http://stackoverflow.com/help/privileges).
 [^tour-badge]: The Stack Overflow tour can be found at [http://stackoverflow.com/tour](http://stackoverflow.com/tour), and all badges are listed on [http://stackoverflow.com/help/badges](http://stackoverflow.com/help/badges).
@@ -26,11 +24,15 @@ This paper takes a first step along the path of applying econometric analysis to
 
 @Grant2013 present empirical evidence that three badges awarded for editing encourage recipients to make more edits in the two months preceding receipt of the badge compared to the two months after receiving the badge. This paper extends their findings by examining all types of user activity (posting questions, posting answers, and editing posts), and exploring the impact of three new badges awarded for asking questions. Table \ref{tab:badges} describes the six badges considered in this paper.
 
+\input{paper/table.tex}
+
 Let $y_{it}$ be the number of edits user $i$ makes on day $t$, and $t_i^*$ denote the day user $i$ recieves the badge of interest. Following the approach of @Jacobson1993, I regress the number of edits user $i$ makes on day $t$ on a user fixed effect $\alpha_i$, a set of dummy variables indicating whether the user received the badge on day $t-k$, while controlling for day of the week effects $\gamma_j$
 
 $$
 \log(1 + y_{it}) = \alpha_i + \sum_{k=-29}^{30} \1 \{ t = t_i^* + k \} \delta_k + \sum_{j=1}^6 \1 \{ t \bmod 7 = j \} \gamma_j + \epsilon_{it}.
 $$
+
+\footnotetext{"A well-received question is one that's open, not deleted, and has a score > 0." \url{http://meta.stackexchange.com/questions/234259/asking-days-badges}}
 
 The model parameters are estimated using an ordinary least squares regression, and standard errors are clustered at the user level. Define $f(k)$ to be the expected number of actions taken on the $k$'th day since receiving the badge
 
@@ -40,13 +42,12 @@ $$
 
 The predicted number of actions $\hat{f(k)}$ is presented in Figure \ref{fig:badges}. The 95% confidence interval is depicted as a gray band around the linear prediction, standard errors were calculated using the delta method [@Williams2012]. Figure \ref{fig:badges} confirms the findings of @Grant2013. Editing increases gradually before receiving a badge for editing, with a large jump in activity on the award day. We also see that editing drops quickly after receiving the badge and gradually declines over time. It's interesting to see how few questions were asked by the recipients of the editing badges in the two months around receiving the badge, and to see that the rate of answering questions has a very slight increase leading up to receiving the badge and a similarly slight decrease after receiving the badge.
 
-The results for the Curious, Inquisitve, and Socratic badges are quite different. In general, recipients of these badges are not particularly active on the site. The average level of questions, answers, and edits made all hover around zero. The uptick in questions asked on the day before receiving the badge is mechanical. Many users who earn these badges ask a question the day before they earn the badge.
-
-By looking at a new set of badges we find that not all badges are created equal. The three badges for editing seem effective at changing user behavior around the time the badge is awarded. The three badges for questions do not appear effective at changing user behavior. This is not to say that the badges for asking questions are not useful to the Stack Overflow platform. @Antin2011 suggest five social psychological functions of badges. A badge awarded for asking good questions may be valuable as a social status symbol or a personal affirmation of past success. 
-
-\input{paper/table.tex}
-
 ![\label{fig:badges} User activity over time](figures/badges.pdf)
+
+The results for the question-focused badges, Curious, Inquisitve, and Socratic, are quite different. In general, recipients of these badges are not particularly active on the site. The average level of questions, answers, and edits made all hover around zero. The uptick in questions asked on the day before receiving the badge is mechanical. Many users who earn these badges ask a question the day before they earn the badge.
+
+By looking at a new set of badges we find that not all badges are effective at motivating user activity. The three badges for editing seem effective at changing user behavior around the time the badge is awarded. The three badges for questions do not appear effective at changing user behavior. This is not to say that the badges for asking questions are not useful to the Stack Overflow platform.
+
 
 # Conclusion
 
