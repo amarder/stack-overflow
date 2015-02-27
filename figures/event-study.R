@@ -134,7 +134,7 @@ plot_counts <- function(counts) {
     return(g)
 }
 
-main <- function(debug=FALSE) {
+plot_wrapper <- function(debug=FALSE) {
     # Set up data
     tags <- c("Strunk & White", "Copy Editor", "Archaeologist", "Curious", "Inquisitive", "Socratic")
     data <- get_data2(tags)
@@ -147,8 +147,8 @@ main <- function(debug=FALSE) {
         coefficients <- data %>% group_by(badge, PostTypeId) %>% do(get_coefficients(.))
         g <- plot_coefficients(coefficients)
     }
-
-    ggsave('figures/badges.pdf', g, height=8, width=9)
+    return(g)
 }
 
-main()
+g <- plot_wrapper()
+ggsave('figures/badges.pdf', g, height=11, width=9)
