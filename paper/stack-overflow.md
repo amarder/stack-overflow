@@ -20,21 +20,19 @@ This paper takes a first step along the path of applying econometric analysis to
 
 @Grant2013 present empirical evidence that three badges awarded for editing encourage recipients to make more edits in the two months preceding receipt of the badge compared to the two months after receiving the badge. This paper extends their findings by examining all types of user activity (posting questions, posting answers, and editing posts), and exploring the impact of three new badges awarded for asking questions. Table \ref{tab:badges} describes the six badges considered in this paper.
 
-\input{paper/table.tex}
-
 Let $y_{it}$ be the number of edits user $i$ makes on day $t$, and $t_i^*$ denote the day user $i$ receives the badge of interest. Following the approach of @Jacobson1993, I regress the number of edits user $i$ makes on day $t$ on a user fixed effect $\alpha_i$, a set of dummy variables indicating whether the user received the badge on day $t-k$, while controlling for day of the week effects $\gamma_j$
 
-$$
+\begin{equation}
 \log(1 + y_{it}) = \alpha_i + \sum_{k=-29}^{30} \1 \{ t = t_i^* + k \} \delta_k + \sum_{j=1}^6 \1 \{ t \bmod 7 = j \} \gamma_j + \epsilon_{it}.
-$$
-
-\footnotetext{A question is \textit{well-received} if it's open and has a score greater than 0. \url{http://meta.stackexchange.com/questions/234259/asking-days-badges}}
+\end{equation}
 
 The model parameters are estimated using an ordinary least squares regression, and standard errors are clustered at the user level. Define $f(k)$ to be the expected number of actions taken on the $k$'th day since receiving the badge
 
-$$
+\input{paper/table.tex}
+
+\begin{equation}
 f(k) = \E \left[ \log(1 + y_{it}) \; | \; t=t^*_i + k \right].
-$$
+\end{equation}
 
 The predicted number of actions $\hat{f(k)}$ is presented in Figure \ref{fig:badges}. The 95% confidence interval is depicted as a gray band around the linear prediction, standard errors were calculated using the delta method [@Williams2012].
 
@@ -42,7 +40,12 @@ The predicted number of actions $\hat{f(k)}$ is presented in Figure \ref{fig:bad
 
 The first three rows of Figure \ref{fig:badges} illustrate how user activity changes around the time one earns a badge for editing. Each row is labeled with the name of the focal badge (_Strunk & White_, _Copy Editor_, and _Archaeologist_). There is one column for each type of user action (posting a question, posting an answer, or editing a post). The figure confirms the findings of @Grant2013. Editing increases gradually before receiving a badge for editing, with a large jump in activity on the award day. We also see that editing drops quickly after receiving the badge and gradually declines over time. It's interesting to see how few questions were asked by the recipients of the editing badges, and to see that the rate of answering questions has a very slight increase leading up to receiving the badge and a similarly slight decrease after receiving the badge.
 
-![\label{fig:badges} User activity over time](figures/badges.pdf)
+\begin{figure}
+  \centering
+  \caption{User activity over time}
+  \label{fig:badges}
+  \includegraphics[width=\textwidth]{figures/badges.pdf}
+\end{figure}
 
 The results for the question-focused badges, _Curious_, _Inquisitive_, and _Socratic_, are quite different. In general, recipients of these badges are not particularly active on the site. The average level of questions, answers, and edits made all hover near zero. The uptick in questions asked on the day before receiving the badge is mechanical. Many users who earn these badges ask a question the day before they earn the badge.
 
