@@ -1,4 +1,4 @@
-\documentclass[$if(fontsize)$$fontsize$,$endif$$if(lang)$$lang$,$endif$$if(papersize)$$papersize$,$endif$$for(classoption)$$classoption$$sep$,$endfor$]{$documentclass$}
+\documentclass[conference, onecolumn]{IEEEtran}
 
 % My customizations
 \usepackage{dsfont}
@@ -7,6 +7,7 @@
 \usepackage{booktabs}
 \newcommand{\ra}[1]{\renewcommand{\arraystretch}{#1}}
 \usepackage[flushleft]{threeparttable}
+\newcommand{\mynote}{\item \leavevmode\kern-\scriptspace\kern-\labelsep}
 
 $if(fontfamily)$
 \usepackage{$fontfamily$}
