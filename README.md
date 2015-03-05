@@ -1,4 +1,4 @@
-# Stack Overflow badges and user behavior: An econometric approach
+# Stack Overflow badges and user behavior
 
 Download the current draft of the report [here](https://github.com/amarder/stack-overflow/raw/master/paper/stack-overflow.pdf). Comments and questions are welcome!
 
