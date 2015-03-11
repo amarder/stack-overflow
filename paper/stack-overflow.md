@@ -1,11 +1,14 @@
 ---
 title: Stack Overflow badges and user behavior
-subtitle: An econometric approach
+subtitle: An observational study
 author: Andrew Marder
 date: \today
+abstract:
 nocite: |
-  @Antin2011, @MSRChallenge2015, @se-dump
+  @se-dump
 ---
+
+# Introduction
 
 Stack Overflow is a question and answer community designed for programmers. It is the largest of 130 communities in the Stack Exchange network. Created in 2008, the knowledge organized by Stack Overflow has become a valuable resource for software developers. On January 20, @Spoelsky2015 announced that Stack Exchange had raised $40 million in venture capital funding. Stack Overflow gives users who ask questions access to expert technical help, while users who answer questions build their reputation for technical expertise and use that reputation to find better employment opportunities.
 
@@ -16,7 +19,23 @@ Stack Overflow is a question and answer community designed for programmers. It i
 
 This paper takes a first step along the path of applying econometric analysis to publicly available Stack Overflow data. Do badges motivate users to contribute to the site? Which badges are most effective? What types of user contributions are responsive to gamification? To begin answering these questions, I study how users behave around the time they are awarded badges.
 
-# Methods
+_Literature review_
+
+The key papers I want to build on include:
+
+1. @Neckerman
+
+2. @Kosfeld
+
+Papers that might flesh out my literature review include:
+
+1. @Delfgaauw
+
+2. @Larkin
+
+# Data
+
+# Empirical specification
 
 @Grant2013 present empirical evidence that three badges awarded for editing encourage recipients to make more edits in the two months preceding receipt of the badge compared to the two months after receiving the badge. This paper extends their findings by examining all types of user activity (posting questions, posting answers, and editing posts), and exploring the impact of three new badges awarded for asking questions. Table \ref{tab:badges} describes the six badges considered in this paper.
 
@@ -51,7 +70,7 @@ The results for the question-focused badges, _Curious_, _Inquisitive_, and _Socr
 
 By looking at a new set of badges we find that not all badges are effective at motivating user activity. The three badges for editing seem effective at changing user behavior around the time the badge is awarded. The three badges for questions do not appear effective at changing user behavior.
 
-# Conclusion
+# Conclusion (1 page)
 
 Stack Overflow provides a platform for job searchers to signal their ability by answering difficult technical questions publicly. Unlike Spence's [-@Spence1973] model of job market signaling, Stack Overflow enables job searchers to signal their ability in the form of a valuable public good.
 
