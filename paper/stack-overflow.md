@@ -21,17 +21,23 @@ This paper takes a first step along the path of applying econometric analysis to
 
 _Literature review_
 
-The key papers I want to build on include:
+I think a top ten paper list will show that I did a solid literature review. I want a cohesive discussion of how my paper fits in with the literature. Although there are papers that everyone else cites, I don't need to bend to social pressure on this one.
 
-1. @Neckerman
+1. @Neckerman measure the impact of an award system on employee productivity at a call center of a Fortune 500 company. The small monetary award, given publicly, had a statistically significant effect on productivity in the month following receipt of the award.
 
-2. @Kosfeld
+2. @Kosfeld run a randomized controlled trial, 7 control groups of about 10 students completed a data entry task for two hours, while 9 treatment groups performed the same task but the two students who put in the most effort were presented an non-monetary award publicly. The treatment group was about 12 percent more productive on average than the control group, and the difference in quality between the two groups was not statistically different from zero.
 
-Papers that might flesh out my literature review include:
+3. @Ashraf
 
-1. @Delfgaauw
+4. @Chan
 
-2. @Larkin
+5. @Frey
+
+6. @Moldovanu - provides some theory that might be useful.
+
+7. @McManus
+
+8. @Delfgaauw
 
 # Data
 
