@@ -14,8 +14,12 @@ figures/badges.pdf: figures/event-study.R my_db.sqlite figures/my_poisson.do
 paper/clean.bib: paper/clean-references.py paper/raw.bib
 	python paper/clean-references.py paper/raw.bib > paper/clean.bib
 
-paper/stack-overflow.pdf: paper/stack-overflow.md paper/clean.bib paper/*.tex
-	pandoc paper/stack-overflow.md --template=paper/template.tex --biblio paper/clean.bib --filter pandoc-citeproc -o paper/stack-overflow.pdf
+paper/stack-overflow.pdf: paper/clean.bib paper/*.tex
+	cd paper; \
+	pdflatex stack-overflow; \
+	bibtex stack-overflow; \
+	pdflatex stack-overflow; \
+	pdflatex stack-overflow
 
 wc: paper/stack-overflow.pdf
 	pdftotext paper/stack-overflow.pdf - | wc -w
