@@ -1,19 +1,20 @@
 \documentclass[conference]{IEEEtran}
 
+\usepackage{amsmath}
 \usepackage{dsfont}
 \newcommand{\1}{\mathds{1}}
 \newcommand{\E}{\mathrm{E}}
 \usepackage{booktabs}
-\newcommand{\ra}[1]{\renewcommand{\arraystretch}{#1}}
 \usepackage[flushleft]{threeparttable}
 \newcommand{\mynote}{\item \leavevmode\kern-\scriptspace\kern-\labelsep}
 \usepackage{graphicx}
 \usepackage{hyperref}
 \usepackage[numbers]{natbib}
+\usepackage{flushend}
 
 \title{
-  Stack Overflow badges and user behavior \\
-  An econometric approach
+  Stack Overflow Badges and User Behavior: \\
+  An Econometric Approach
 }
 \author{
   Andrew Marder \\
@@ -22,6 +23,10 @@
   \href{mailto:amarder@hbs.edu}{amarder@hbs.edu}
 }
 \date{\today}
+
+\clubpenalty = 10000
+\widowpenalty = 10000
+\displaywidowpenalty = 10000
 
 \begin{document}
 
@@ -49,7 +54,10 @@ This paper takes a first step along the path of applying econometric analysis to
 Let $y_{it}$ be the number of edits user $i$ makes on day $t$, and $t_i^*$ denote the day user $i$ receives the badge of interest. Following the approach of \citet{Jacobson1993}, I regress the number of edits user $i$ makes on day $t$ on a user fixed effect $\alpha_i$, a set of dummy variables indicating whether the user received the badge on day $t-k$, while controlling for day of the week effects $\gamma_j$
 
 \begin{equation}
-\log(1 + y_{it}) = \alpha_i + \sum_{k=-29}^{30} \1 \{ t = t_i^* + k \} \delta_k + \sum_{j=1}^6 \1 \{ t \bmod 7 = j \} \gamma_j + \epsilon_{it}.
+\begin{split}
+\log(1 + y_{it}) &= \alpha_i + \sum_{k=-29}^{30} \1 \{ t = t_i^* + k \} \delta_k \\
+  &+ \sum_{j=1}^6 \1 \{ t \bmod 7 = j \} \gamma_j + \epsilon_{it}.
+\end{split}
 \end{equation}
 
 The model parameters are estimated using an ordinary least squares regression, and standard errors are clustered at the user level. Define $f(k)$ to be the expected number of actions taken on the $k$'th day since receiving the badge
@@ -64,9 +72,9 @@ The predicted number of actions $\hat{f(k)}$ is presented in Figure \ref{fig:bad
 
 \begin{figure*}
   \centering
-  \caption{User activity over time}
   \label{fig:badges}
   \includegraphics[width=\textwidth]{../figures/badges.pdf}
+  \caption{User activity over time}
 \end{figure*}
 
 The first three rows of Figure \ref{fig:badges} illustrate how user activity changes around the time one earns a badge for editing. Each row is labeled with the name of the focal badge (\textit{Strunk \& White}, \textit{Copy Editor}, and \textit{Archaeologist}). There is one column for each type of user action (posting a question, posting an answer, or editing a post). The figure confirms the findings of \citet{Grant2013}. Editing increases gradually before receiving a badge for editing, with a large jump in activity on the award day. We also see that editing drops quickly after receiving the badge and gradually declines over time. It's interesting to see how few questions were asked by the recipients of the editing badges, and to see that the rate of answering questions has a very slight increase leading up to receiving the badge and a similarly slight decrease after receiving the badge.
