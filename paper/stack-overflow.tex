@@ -38,7 +38,7 @@ I need an abstract.
 
 \section{Introduction}
 
-Stack Overflow is a question and answer community designed for programmers. It is the largest of 130 communities in the Stack Exchange network. Created in 2008, the knowledge organized by Stack Overflow has become a valuable resource for software developers. On January 20, \citet{Spoelsky2015} announced that Stack Exchange had raised \$40 million in venture capital funding. Stack Overflow gives users who ask questions access to expert technical help, while users who answer questions build their reputation for technical expertise and use that reputation to find better employment opportunities.
+Stack Overflow is a question and answer community designed for programmers. It is the largest of 130 communities in the Stack Exchange network. Created in 2008, the knowledge organized by Stack Overflow has become a valuable resource for software developers. On January 20, \citet{Spoelsky2015} announced that Stack Exchange had raised \$40 million in venture capital funding. Stack Overflow gives users who ask questions access to expert technical help, while users who answer questions build their reputation for technical expertise, a good reputation can be used to find better employment opportunities.
 
 \citet{Deterding2011} define ``\textit{gamification} as the use of game design elements in non-game contexts.'' Stack Overflow gamifies the process of asking and answering questions as follows. A user earns reputation points when another user votes on her posts (5 points when a question is voted up, 10 points when an answer is voted up, 15 points when an answer is accepted, and 2 points when an edit is approved). As a user earns reputation points she unlocks privileges on the site. For instance, a user must have at least 15 reputation points to vote up a question or answer.\footnote{A full list of privileges and the corresponding reputation points is available at \url{http://stackoverflow.com/help/privileges}.} Users are awarded badges for special achievements. For example, one receives the \textit{Informed} badge by reading the tour page.\footnote{The Stack Overflow tour can be found at \url{http://stackoverflow.com/tour}, and all badges are listed on \url{http://stackoverflow.com/help/badges}.}
 
@@ -55,8 +55,8 @@ Let $y_{it}$ be the number of edits user $i$ makes on day $t$, and $t_i^*$ denot
 
 \begin{equation}
 \begin{split}
-\log(1 + y_{it}) &= \alpha_i + \sum_{k=-29}^{30} \1 \{ t = t_i^* + k \} \delta_k \\
-  &+ \sum_{j=1}^6 \1 \{ t \bmod 7 = j \} \gamma_j + \epsilon_{it}.
+\log(1 + y_{it}) = \; & \alpha_i + \sum_{k=-29}^{30} \1 \{ t = t_i^* + k \} \delta_k \; + \\
+  & \sum_{j=1}^6 \1 \{ t \bmod 7 = j \} \gamma_j + \epsilon_{it}.
 \end{split}
 \end{equation}
 
@@ -72,9 +72,8 @@ The predicted number of actions $\hat{f(k)}$ is presented in Figure \ref{fig:bad
 
 \begin{figure*}
   \centering
-  \label{fig:badges}
   \includegraphics[width=\textwidth]{../figures/badges.pdf}
-  \caption{User activity over time}
+  \caption{User activity over time \label{fig:badges}}
 \end{figure*}
 
 The first three rows of Figure \ref{fig:badges} illustrate how user activity changes around the time one earns a badge for editing. Each row is labeled with the name of the focal badge (\textit{Strunk \& White}, \textit{Copy Editor}, and \textit{Archaeologist}). There is one column for each type of user action (posting a question, posting an answer, or editing a post). The figure confirms the findings of \citet{Grant2013}. Editing increases gradually before receiving a badge for editing, with a large jump in activity on the award day. We also see that editing drops quickly after receiving the badge and gradually declines over time. It's interesting to see how few questions were asked by the recipients of the editing badges, and to see that the rate of answering questions has a very slight increase leading up to receiving the badge and a similarly slight decrease after receiving the badge.
@@ -85,11 +84,9 @@ By looking at a new set of badges we find that not all badges are effective at m
 
 \section{Conclusion}
 
-Stack Overflow provides a platform for job searchers to signal their ability by answering difficult technical questions publicly. Unlike \citet{Spence1973} model of job market signaling, Stack Overflow enables job searchers to signal their ability in the form of a valuable public good.
-
 When interpreting the empirical results of this paper, please consider Holland and Rubin's motto "no causation without manipulation" \citep{Holland1986}. There is no manipulation of the explanatory variable in this study, consequently we have not identified the causal effect of badges. To estimate the causal impact of badges on user activity we need to find a source of exogenous variation \citep{Miller2013}.
 
-This paper confirms the empirical observation of \citet{Grant2013}, on average users who receive a badge for editing make more edits in the 30 days prior to receiving the badge compared to the 30 days after receiving the badge. In addition, we consider how other user actions respond to editing badges. The number of questions asked each day is near zero. The slight time trends in the number of answers posted hint at a potential spillover effect, editing badges may have a secondary effect of encouraging answers. Finally, we show that users who received badges for asking questions behaved differently. In particular, we found that users do not appear motivated to change their activity levels to earn badges for asking questions.
+This paper confirms the empirical observation of \citet{Grant2013}, on average users who receive a badge for editing make more edits in the 30 days prior to receiving the badge compared to the 30 days after receiving the badge. In addition, we consider how other user actions respond to editing badges. The number of questions asked each day is near zero. Finally, we show that users who received badges for asking questions behaved differently. In particular, we found that users do not appear motivated to change their activity levels to earn badges for asking questions.
 
 \section*{Acknowledgements}
 
