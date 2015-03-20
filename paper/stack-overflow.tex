@@ -11,9 +11,10 @@
 \usepackage{hyperref}
 \usepackage[numbers]{natbib}
 \usepackage{flushend}
-\newcommand{\myrotate}[1]{\rotatebox[origin=c]{90}{#1}}
+% \newcommand{\myrotate}[1]{\rotatebox[origin=c]{90}{#1}}
+\newcommand{\myrotate}[1]{#1}
 \newcommand{\PreserveBackslash}[1]{\let\temp=\\#1\let\\=\temp}
-\newcommand{\mycell}[1]{\parbox[m]{1.1in}{\PreserveBackslash\raggedright #1}}
+\newcommand{\mycell}[1]{\parbox[m]{1.1in}{\PreserveBackslash\raggedright \vspace{7pt} #1 \vspace{7pt}}}
 \usepackage{multirow}
 
 \title{
@@ -66,23 +67,21 @@ This paper takes a first step along the path of applying econometric analysis to
 \section{Related Literature}
 
 \begin{table}
-  \centering
+  \renewcommand{\arraystretch}{2}
   \caption{Four types of intervention used to promote contributions to a public good.}
   \label{tab:kraft-todd}
-  \begin{tabular}{|c|c|c|}
+  \begin{tabular}{r|c|c|}
+
+    \multicolumn{1}{c}{} & \multicolumn{1}{c}{\textit{Material-benefit}} & \multicolumn{1}{c}{\textit{Social-benefit}} \\
     \cline{2-3}
-\multicolumn{1}{c|}{} & & \\[-.05in]
-\multicolumn{1}{c|}{} & Material-benefit & Social-benefit \\
-\multicolumn{1}{c|}{} & & \\[-.07in]
-    \hline
- & & \\
-\myrotate{Self-interest} & \mycell{Material rewards \\ \\ Cash or gifts provided in exchange for contributing} & \mycell{Observability \\ \\ Others informed about your contribution decisions} \\
-& & \\
-\hline
-& & \\
-\myrotate{Other-interest} & \mycell{Increased efficacy \\ \\ Matching/seed funds provided, or benefit to others emphasized} & \mycell{Descriptive norms \\ \\ You are informed about contribution decisions of others} \\[5pt]
-& & \\
-    \hline
+
+    \myrotate{\textit{Self-interest}} & \mycell{ Material rewards \\ \\ Cash or gifts provided in exchange for contributing } & \mycell{Observability \\ \\ Others informed about your contribution decisions} \\
+
+    \cline{2-3}
+
+    \myrotate{\textit{Other-interest}} & \mycell{ Increased efficacy \\ \\ Matching/seed funds provided, or benefit to others emphasized } & \mycell{Descriptive norms \\ \\ You are informed about the contribution decisions of others} \\
+
+    \cline{2-3}
   \end{tabular}
 \end{table}
 
