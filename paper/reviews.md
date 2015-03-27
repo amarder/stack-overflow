@@ -53,7 +53,7 @@ correlational evidence. I have been more careful in the second draft.
 > perspective.
 
 TODO: I think this is a fair criticism of the paper. I need to
-differentiate the paper enough from Granat and Betts (2013) to avoid
+differentiate the paper enough from Grant and Betts (2013) to avoid
 this "revisiting" classification. Why do we care? How is this paper
 different from Grant and Betts (2013)?
 
