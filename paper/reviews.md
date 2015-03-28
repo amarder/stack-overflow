@@ -1,3 +1,7 @@
+TODO: Is there a quantity / quality trade off? Maybe use edit distance
+between edit and previous version to get an idea of how much work is
+done in each edit. That's too tough for right now.
+
 # REVIEW 1
 
 > The paper studies how users behave around the time they are awarded
