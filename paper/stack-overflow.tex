@@ -48,16 +48,17 @@ Stack Overflow is a question and answer community designed for programmers. It i
 
 \citet{Deterding2011} define ``\textit{gamification} as the use of game design elements in non-game contexts.'' Stack Overflow gamifies the process of asking and answering questions as follows. A user earns reputation points when another user votes on her posts (5 points when a question is voted up, 10 points when an answer is voted up, 15 points when an answer is accepted, and 2 points when an edit is approved). As a user earns reputation points she unlocks privileges on the site. For instance, a user must have at least 15 reputation points to vote up a question or answer.\footnote{A full list of privileges and the corresponding reputation points is available at \url{http://stackoverflow.com/help/privileges}.} Users are awarded badges for special achievements. For example, one receives the \textit{Informed} badge by reading the tour page.\footnote{The Stack Overflow tour can be found at \url{http://stackoverflow.com/tour}, and all badges are listed on \url{http://stackoverflow.com/help/badges}.}
 
-This paper takes a first step along the path of applying econometric analysis to publicly available Stack Overflow data. Do badges motivate users to contribute to the site? Which badges are most effective? What types of user contributions are responsive to gamification? To begin answering these questions, I study how users behave around the time they are awarded badges.
+This paper takes a first step along the path of applying econometric analysis to publicly available Stack Overflow data \cite{se-dump}. Do badges motivate users to contribute to the site? Which badges are most effective? What types of user contributions are responsive to gamification? To begin answering these questions, I study how users behave around the time they are awarded badges.
 
 \section{Motivating Contributions}
 
-\citet{Kraft-Todd} survey the literature on field experiments aimed at
-promoting cooperation in social dilemmas (voter turnout, environmental
-protection, universal healthcare, \dots). Table \ref{tab:kraft-todd}
-describes the four categories used to classify the interventions
-surveyed. I use the same classifications to consider why users
-contribute to Stack Overflow.
+\citet{Kraft-Todd} survey the literature on field experiments designed
+to promote cooperation in social dilemmas. Examples of social dilemmas include voter turnout,
+environmental protection, and universal healthcare. Table
+\ref{tab:kraft-todd} describes the four categories they use to
+classify interventions. I have further grouped their classifications
+using the concepts of self-interest and other-interest defined by
+\citet{Gerbasi}.
 
 \begin{table}[h!tbp]
   \renewcommand{\arraystretch}{2}
@@ -78,25 +79,25 @@ contribute to Stack Overflow.
   \end{tabular}
 \end{table}
 
-Why do users contribute to Stack Overflow? The four categories of Table \ref{tab:kraft-todd} provide potential reasons:
+The general categories of Table \ref{tab:kraft-todd} hint at some of the specific reasons why users might contribute to Stack Overflow:
 \begin{enumerate}
-\item Material rewards: You might contribute to Stack Overflow to
-  signal your technical ability to potential employers. By
-  contributing to Stack Overflow you increase the probability of
+\item Material rewards: A user might contribute to Stack Overflow to
+  signal her technical ability to potential employers. By
+  contributing to Stack Overflow she increases the probability of
   finding better employment opportunities, leading to material
   rewards.
-\item Increased efficacy: By emphasizing how your contributions to the
-  site benefit others - providing high quality answers helps others
-  save time when solving similar problems - you may be motivated to
-  contribute.
-\item Observability: Since others are informed about your contribution
-  decisions, you will be motivated to contribute if you want others
-  to perceive you as generous.
-\item Descriptive norms: If you are concerned about how your
-  contributions compare to the contributions of others,
-  the reputation leaderboards may spark your competitive drive.
+\item Increased efficacy: By emphasizing how high quality
+  answers help others solve similar problems, Stack
+  Overflow can motivate other-interested individuals to contribute.
+\item Observability: Contributions to the platform are publicized
+  through the reputation and badge system. If a user is concerned
+  about how others perceive her on the site (generous, competent, \dots),
+  she may be motivated to contribute.
+\item Descriptive norms: If a user is concerned about how her
+  contributions compare to the contributions of others, the reputation
+  leaderboards may motivate her to contribute.
 \end{enumerate}
-This is not an exhaustive list of why users contribute to Stack Overflow. But, it will be useful when considering why users increase contributions around receiving certain badges and not others.
+This is not an exhaustive list of why users contribute to Stack Overflow. However, it will be useful when considering why users increase contributions around receiving certain badges and not others.
 
 \input{table.tex}
 
@@ -145,7 +146,7 @@ This paper confirms the empirical observation of \citet{Grant2013}, on average u
 
 The author would like to thank three anonymous reviewers for helpful comments and suggestions, and Harvard Business School for financial support.
 
-\nocite{MSRChallenge2015, se-dump}
+\nocite{MSRChallenge2015}
 
 \renewcommand{\bibfont}{\small}
 \bibliographystyle{IEEEtranN}
