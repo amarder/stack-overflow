@@ -1,3 +1,4 @@
+library(extrafont)
 library(dplyr)
 library(lubridate)
 library(ggplot2)
@@ -107,6 +108,7 @@ plot_coefficients <- function(coefficients) {
         scale_color_manual(values="#000000", labels="Linear prediction") +
         scale_fill_manual(values=c('#555555', '#555555'), labels="95% Confidence interval") +
         theme_bw() +
+        theme(text=element_text(family="Times New Roman")) +
         xlab('Days since receiving badge') +
         ylab('Number of actions') +
         facet_grid(badge ~ PostTypeId) +
@@ -151,4 +153,6 @@ plot_wrapper <- function(debug=FALSE) {
 }
 
 g <- plot_wrapper()
-ggsave('figures/badges.pdf', g, height=11, width=9)
+path <- 'figures/badges.pdf'
+ggsave(path, g, height=11, width=9)
+embed_fonts(path)
