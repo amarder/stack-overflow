@@ -39,7 +39,7 @@
 \maketitle
 
 \begin{abstract}
-Does gamification work? This paper examines how Stack Overflow users behave when earning badges. A regression analysis of user activity logs shows users change their contribution amounts when earning some badges but not others. This paper adds new support to the growing literature that gamification works, but its efficacy is context-dependent \citep{Hamari}. Potential methods for motivating contributions are considered and an alternative approach to badges is suggested.
+Does gamification work? This paper examines how Stack Overflow users behave when earning badges. A regression analysis of user activity logs shows users change their contribution amounts when earning some badges but not others. This paper adds new support to the growing literature that gamification works, but its efficacy is context-dependent \citep{Hamari}. Alternative methods for motivating user contributions are considered.
 \end{abstract}
 
 \section{Introduction}
@@ -88,7 +88,7 @@ Focusing on the experiments surveyed by \citet{Kraft-Todd}, interventions that p
   rewards.
 \item Increased efficacy: By emphasizing how high quality
   answers help others solve similar problems, Stack
-  Overflow can motivate other-interested individuals to contribute.
+  Overflow can motivate other-interested individuals to contribute. \cite{Gerbasi}
 \item Observability: Contributions to the platform are publicized
   through the reputation and badge system. If a user is concerned
   about how others perceive her on the site (generous, competent, \dots),
@@ -130,19 +130,19 @@ The first three rows of Figure \ref{fig:badges} illustrate how user activity cha
 
 The results for the question-focused badges, \textit{Curious}, \textit{Inquisitive}, and \textit{Socratic}, are quite different. In general, recipients of these badges are not particularly active on the site. The average level of questions, answers, and edits made all hover near zero. The uptick in questions asked on the day before receiving the badge is mechanical. Many users who earn these badges ask a question the day before they earn the badge.
 
-By looking at a new set of badges we find that not all badges are effective at motivating user contributions. Although Stack Overflow has design elements that cover each of the four types of motivations outlined in Table \ref{tab:kraft-todd}, badges awarded for asking questions appear unable to raise contributions to the site. Asking a good question on Stack Overflow is difficult, it requires ``search and research'' \cite{so-ask}. Making contributions to the site by editing posts appears relatively easy when compared to generating new well-researched questions. Stack Overflow could increase the number of questions posted if they made it easier to post anonymous questions. Allowing users to remove the observability of their actions would help users avoid the social cost of posting questions.
+\vspace{0.25in}
 
 \section{Conclusion}
 
-When interpreting the empirical results of this paper, please consider Holland and Rubin's motto "no causation without manipulation" \citep{Holland1986}. There is no manipulation of the explanatory variable in this study, consequently we have not identified the causal effect of badges. To estimate the causal impact of badges on user activity we need to find a source of exogenous variation \citep{Miller2013}.
+When interpreting the empirical results of this paper, please recall Holland and Rubin's motto "no causation without manipulation" \citep{Holland1986}. There is no manipulation of the explanatory variable in this study, consequently we have not identified the causal effect of badges. To estimate the causal impact of badges on user activity we need to find a source of exogenous variation \citep{Miller2013}.
 
-This paper confirms the empirical observation of \citet{Grant2013}, on average users who receive a badge for editing make more edits in the 30 days prior to receiving the badge compared to the 30 days after receiving the badge. In addition, we consider how other user actions respond to editing badges. The number of questions asked each day is near zero, while the number of answers posted hovers around 1. Finally, we show that users who received badges for asking questions behaved differently. In particular, we found that users do not appear motivated to change their activity levels to earn badges for asking questions. An alternative approach to promoting questions is suggested - allowing users to post anonymous questions would eliminate the social cost currently associated with posting a question.
+This paper confirms the empirical observation of \citet{Grant2013}. On average, users who receive a badge for editing make more edits in the 30 days prior to receiving the badge compared to the 30 days after receiving the badge. In addition, we find that recipients of the editing badges ask almost no questions, and answer about one question each day. Finally, we show that users who receive badges for asking questions behave differently. In particular, we found that users do not appear motivated to change their activity levels to earn badges for asking questions.
+
+Although Stack Overflow has design elements that exemplify each of the four motivators outlined by \citet{Grant2013}, badges awarded for asking questions appear unable to increase the number of questions posted to the site. Asking a good question is difficult, it requires ``search and research'' \cite{so-ask}. One feature that might increase the number of questions posted is adding support for anonymous questions. Allowing a user to remove the observability of her action would help her avoid the social cost of posting a poorly researched question. A careful system of anonymous questions would have to balance the benefit of increasing the number of questions asked, with the cost of lower quality questions on average.
 
 \section*{Acknowledgements}
 
 The author would like to thank three anonymous reviewers for helpful comments and suggestions, and Harvard Business School for financial support.
-
-\vspace{0.1in}
 
 \nocite{MSRChallenge2015}
 
