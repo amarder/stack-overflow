@@ -1,6 +1,8 @@
-\documentclass[conference]{IEEEtran}
+\documentclass{article}
 
-\usepackage[bookmarks=false]{hyperref}
+\usepackage{natbib}
+\usepackage{fullpage}
+\usepackage{hyperref}
 \usepackage{amsmath}
 \usepackage{dsfont}
 \newcommand{\1}{\mathds{1}}
@@ -9,9 +11,6 @@
 \usepackage[flushleft]{threeparttable}
 \newcommand{\mynote}{\item \leavevmode\kern-\scriptspace\kern-\labelsep}
 \usepackage{graphicx}
-\usepackage[numbers]{natbib}
-\usepackage{flushend}
-% \newcommand{\myrotate}[1]{\rotatebox[origin=c]{90}{#1}}
 \newcommand{\myrotate}[1]{#1}
 \newcommand{\PreserveBackslash}[1]{\let\temp=\\#1\let\\=\temp}
 \newcommand{\mycell}[1]{\parbox[m]{1.1in}{\PreserveBackslash\raggedright \vspace{7pt} #1 \vspace{7pt}}}
@@ -19,20 +18,12 @@
 \usepackage{stfloats}
 
 \title{
-  Stack Overflow Badges and User Behavior: \\
-  An Econometric Approach
+  Stack Overflow Badges and User Behavior
 }
 \author{
-  Andrew Marder \\
-  Harvard Business School \\
-  Boston, Massachusetts, USA \\
-  \href{mailto:amarder@hbs.edu}{amarder@hbs.edu}
+  Andrew Marder
 }
 \date{\today}
-
-\clubpenalty = 10000
-\widowpenalty = 10000
-\displaywidowpenalty = 10000
 
 \begin{document}
 
@@ -59,6 +50,7 @@ environmental protection, and universal healthcare. Table
 classify interventions.
 
 \begin{table}[h!tbp]
+  \centering
   \renewcommand{\arraystretch}{2}
   \caption{Four types of intervention used to promote contributions to a public good.}
   \label{tab:kraft-todd}
@@ -105,10 +97,7 @@ This is not an exhaustive list of why users contribute to Stack Overflow. Howeve
 
 Let $y_{it}$ be the number of edits user $i$ makes on day $t$, and $t_i^*$ denote the day user $i$ receives the badge of interest. Following the approach of \citet{Jacobson1993}, I regress the number of edits user $i$ makes on day $t$ on a user fixed effect $\alpha_i$, a set of dummy variables indicating whether the user received the badge on day $t-k$, and day of the week effects $\gamma_j$
 \begin{equation}
-\begin{split}
-\log(1 + y_{it}) = \; & \alpha_i + \sum_{k=-29}^{30} \1 \{ t = t_i^* + k \} \delta_k \; + \\
-  & \sum_{j=1}^6 \1 \{ t \bmod 7 = j \} \gamma_j + \epsilon_{it}.
-\end{split}
+\log(1 + y_{it}) = \; \alpha_i + \sum_{k=-29}^{30} \1 \{ t = t_i^* + k \} \delta_k \; + \sum_{j=1}^6 \1 \{ t \bmod 7 = j \} \gamma_j + \epsilon_{it}.
 \end{equation}
 The model parameters are estimated using an ordinary least squares regression, and standard errors are clustered at the user level.
 
@@ -130,11 +119,7 @@ The first three rows of Figure \ref{fig:badges} illustrate how user activity cha
 
 The results for the question-focused badges, \textit{Curious}, \textit{Inquisitive}, and \textit{Socratic}, are quite different. In general, recipients of these badges are not particularly active on the site. The average level of questions, answers, and edits made all hover near zero. The uptick in questions asked on the day before receiving the badge is mechanical. Many users who earn these badges ask a question the day before they earn the badge.
 
-\vspace{0.125in}
-
 \section{Conclusion}
-
-\vspace{0.125in}
 
 When interpreting the empirical results of this paper, please recall Holland and Rubin's motto "no causation without manipulation" \citep{Holland1986}. There is no manipulation of the explanatory variable in this study, consequently we have not identified the causal effect of badges. To estimate the causal impact of badges on user activity we need to find a source of exogenous variation \citep{Miller2013}.
 
@@ -146,10 +131,7 @@ Although Stack Overflow has design elements that exemplify each of the four moti
 
 The author would like to thank three anonymous reviewers for helpful comments and suggestions, and Harvard Business School for financial support.
 
-\nocite{MSRChallenge2015}
-
-\renewcommand{\bibfont}{\small}
-\bibliographystyle{IEEEtranN}
-\bibliography{IEEEabrv,clean}
+\bibliographystyle{plainnat}
+\bibliography{clean}
 
 \end{document}
